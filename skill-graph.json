@@ -1,0 +1,201 @@
+{
+  "$schema": "./schemas/skill-graph.schema.json",
+  "name": "growth-hacker-skills",
+  "version": "2.0.0",
+  "owner": {
+    "name": "Mamdouh Aboammar",
+    "github": "imMamdouhaboammar"
+  },
+  "router": "growth-hacker-skills",
+  "contextBus": {
+    "template": "templates/growth-context.md",
+    "runtimePath": ".growth-hacker/context.md",
+    "writePolicy": "approved-state-only"
+  },
+  "nodes": [
+    {
+      "id": "growth-hacker-skills",
+      "path": "SKILL.md",
+      "pluginPath": "skills/growth-hacker-skills/SKILL.md",
+      "stage": "router",
+      "consumes": ["user-request", "project-context"],
+      "produces": ["workflow-route", "handoff-contract"]
+    },
+    {
+      "id": "voice-builder",
+      "path": "skills/voice-builder/SKILL.md",
+      "stage": "foundation",
+      "consumes": ["identity", "audience", "writing-samples"],
+      "produces": ["about-me.md", "voice.md"]
+    },
+    {
+      "id": "newsletter-voice",
+      "path": "skills/newsletter-voice/SKILL.md",
+      "stage": "foundation",
+      "consumes": ["voice.md", "newsletter-samples"],
+      "produces": ["newsletter-voice.md"]
+    },
+    {
+      "id": "profile-optimizer",
+      "path": "skills/profile-optimizer/SKILL.md",
+      "stage": "positioning",
+      "consumes": ["about-me.md", "voice.md", "profile-context"],
+      "produces": ["profile-copy", "profile-visual-prompts"]
+    },
+    {
+      "id": "niche-research",
+      "path": "skills/niche-research/SKILL.md",
+      "stage": "research",
+      "consumes": ["niche", "time-window", "audience"],
+      "produces": ["verified-story-set", "research-notes"]
+    },
+    {
+      "id": "analytics-dashboard",
+      "path": "skills/analytics-dashboard/SKILL.md",
+      "stage": "research",
+      "consumes": ["linkedin-analytics-export"],
+      "produces": ["performance-report", "content-recommendations"]
+    },
+    {
+      "id": "content-matrix",
+      "path": "skills/content-matrix/SKILL.md",
+      "stage": "ideation",
+      "consumes": ["topic-pillars", "about-me.md", "voice.md", "research-notes"],
+      "produces": ["content-ideas", "selected-idea"]
+    },
+    {
+      "id": "hook-generator",
+      "path": "skills/hook-generator/SKILL.md",
+      "stage": "ideation",
+      "consumes": ["topic", "angle", "evidence"],
+      "produces": ["hook-options", "selected-hook"]
+    },
+    {
+      "id": "post-writer",
+      "path": "skills/post-writer/SKILL.md",
+      "stage": "writing",
+      "consumes": ["about-me.md", "voice.md", "selected-idea", "source-analysis"],
+      "produces": ["linkedin-post", "caption-draft"]
+    },
+    {
+      "id": "post-formatter",
+      "path": "skills/post-formatter/SKILL.md",
+      "stage": "writing",
+      "consumes": ["topic", "framework", "facts", "voice.md"],
+      "produces": ["framework-led-post"]
+    },
+    {
+      "id": "quote-post",
+      "path": "skills/quote-post/SKILL.md",
+      "stage": "writing",
+      "consumes": ["idea", "voice.md"],
+      "produces": ["quote-copy", "quote-visual-prompt"]
+    },
+    {
+      "id": "editorial-visual-engine",
+      "path": "skills/editorial-visual-engine/SKILL.md",
+      "stage": "visual",
+      "consumes": ["source", "source-analysis", "selected-angle", "voice.md", "brand-context"],
+      "produces": ["source-integrity-block", "creative-direction", "chatgpt-images-prompts", "google-flow-prompt", "linkedin-caption", "x-output"]
+    },
+    {
+      "id": "graphic-designer",
+      "path": "skills/graphic-designer/SKILL.md",
+      "stage": "visual",
+      "consumes": ["finished-post", "brand-context"],
+      "produces": ["post-graphic", "image-prompt", "html-graphic"]
+    },
+    {
+      "id": "gemini-infographic",
+      "path": "skills/gemini-infographic/SKILL.md",
+      "stage": "visual",
+      "consumes": ["source-content", "approved-brief"],
+      "produces": ["gemini-infographic-prompt"]
+    },
+    {
+      "id": "gemini-carousel",
+      "path": "skills/gemini-carousel/SKILL.md",
+      "stage": "visual",
+      "consumes": ["source-content", "approved-carousel-brief"],
+      "produces": ["gemini-carousel-prompts"]
+    },
+    {
+      "id": "youtube-thumbnail",
+      "path": "skills/youtube-thumbnail/SKILL.md",
+      "stage": "visual",
+      "consumes": ["video-title", "brand-context"],
+      "produces": ["thumbnail-prompt"]
+    },
+    {
+      "id": "reels-scripting",
+      "path": "skills/reels-scripting/SKILL.md",
+      "stage": "video",
+      "consumes": ["reference-reel", "newsletter-content", "voice.md"],
+      "produces": ["reel-script", "shot-plan"]
+    },
+    {
+      "id": "pinned-comment",
+      "path": "skills/pinned-comment/SKILL.md",
+      "stage": "community",
+      "consumes": ["published-post", "voice.md"],
+      "produces": ["pinned-comment", "matching-image-prompt"]
+    },
+    {
+      "id": "post-scorer",
+      "path": "skills/post-scorer/SKILL.md",
+      "stage": "quality",
+      "consumes": ["publishable-linkedin-copy", "post-history"],
+      "produces": ["scorecard", "revision-priorities"]
+    }
+  ],
+  "edges": [
+    {"from": "growth-hacker-skills", "to": "voice-builder", "when": "voice context is required and missing", "carries": ["identity", "audience", "samples"]},
+    {"from": "growth-hacker-skills", "to": "niche-research", "when": "fresh niche evidence is required", "carries": ["niche", "time-window", "audience"]},
+    {"from": "growth-hacker-skills", "to": "content-matrix", "when": "the user needs structured ideation", "carries": ["topic-pillars", "voice-context", "research-notes"]},
+    {"from": "growth-hacker-skills", "to": "post-writer", "when": "natural voice-led LinkedIn copy is the primary deliverable", "carries": ["objective", "audience", "idea", "evidence", "voice-context"]},
+    {"from": "growth-hacker-skills", "to": "post-formatter", "when": "the user requests a named copy framework", "carries": ["objective", "framework", "facts", "voice-context"]},
+    {"from": "growth-hacker-skills", "to": "editorial-visual-engine", "when": "a source link must become an editorial content pack", "carries": ["source", "objective", "audience", "brand-context"]},
+    {"from": "growth-hacker-skills", "to": "graphic-designer", "when": "a finished post needs a matching graphic", "carries": ["finished-post", "brand-context"]},
+    {"from": "growth-hacker-skills", "to": "reels-scripting", "when": "short-form video scripting is the primary deliverable", "carries": ["reference-reel", "source-content", "voice-context"]},
+    {"from": "growth-hacker-skills", "to": "analytics-dashboard", "when": "performance data should drive the next content decision", "carries": ["analytics-export"]},
+    {"from": "voice-builder", "to": "newsletter-voice", "when": "newsletter-specific rhythm is required", "carries": ["about-me.md", "voice.md"]},
+    {"from": "voice-builder", "to": "profile-optimizer", "when": "profile positioning follows voice setup", "carries": ["about-me.md", "voice.md"]},
+    {"from": "voice-builder", "to": "content-matrix", "when": "ideas should match the user's positioning", "carries": ["about-me.md", "voice.md"]},
+    {"from": "voice-builder", "to": "post-writer", "when": "voice setup is complete", "carries": ["about-me.md", "voice.md"]},
+    {"from": "voice-builder", "to": "editorial-visual-engine", "when": "source-led captions should match the user", "carries": ["about-me.md", "voice.md"]},
+    {"from": "newsletter-voice", "to": "post-writer", "when": "newsletter material becomes a LinkedIn post", "carries": ["newsletter-voice.md", "source-content"]},
+    {"from": "profile-optimizer", "to": "content-matrix", "when": "content should reinforce the new positioning", "carries": ["positioning", "audience", "topic-pillars"]},
+    {"from": "niche-research", "to": "content-matrix", "when": "research should become multiple ideas", "carries": ["verified-story-set", "research-notes"]},
+    {"from": "niche-research", "to": "post-writer", "when": "one verified story becomes a post", "carries": ["selected-story", "evidence"]},
+    {"from": "niche-research", "to": "editorial-visual-engine", "when": "a verified source becomes a visual pack", "carries": ["selected-source", "research-notes"]},
+    {"from": "analytics-dashboard", "to": "content-matrix", "when": "performance findings should shape future ideas", "carries": ["content-recommendations", "winning-patterns"]},
+    {"from": "analytics-dashboard", "to": "hook-generator", "when": "hook patterns need evidence-based iteration", "carries": ["winning-hooks", "performance-notes"]},
+    {"from": "content-matrix", "to": "hook-generator", "when": "a selected idea needs hook options", "carries": ["selected-idea", "audience"]},
+    {"from": "content-matrix", "to": "post-writer", "when": "a selected idea needs natural voice-led drafting", "carries": ["selected-idea", "voice-context"]},
+    {"from": "content-matrix", "to": "post-formatter", "when": "a selected idea needs a named framework", "carries": ["selected-idea", "framework", "voice-context"]},
+    {"from": "content-matrix", "to": "editorial-visual-engine", "when": "a selected idea is paired with a source", "carries": ["selected-idea", "source", "audience"]},
+    {"from": "hook-generator", "to": "post-writer", "when": "the hook is approved before drafting", "carries": ["selected-hook", "angle", "evidence"]},
+    {"from": "hook-generator", "to": "post-formatter", "when": "the hook is approved before framework drafting", "carries": ["selected-hook", "framework", "evidence"]},
+    {"from": "hook-generator", "to": "editorial-visual-engine", "when": "the visual headline needs stronger options", "carries": ["hook-options", "selected-hook"]},
+    {"from": "post-writer", "to": "graphic-designer", "when": "the post is approved and needs a matching graphic", "carries": ["finished-post", "hook", "brand-context"]},
+    {"from": "post-writer", "to": "editorial-visual-engine", "when": "the post is supported by a source and needs a source-led visual", "carries": ["finished-post", "source", "voice-context"]},
+    {"from": "post-writer", "to": "post-scorer", "when": "the post is publishable", "carries": ["publishable-linkedin-copy"]},
+    {"from": "post-formatter", "to": "graphic-designer", "when": "the framework-led post needs a graphic", "carries": ["framework-led-post", "brand-context"]},
+    {"from": "post-formatter", "to": "post-scorer", "when": "the framework-led post is publishable", "carries": ["publishable-linkedin-copy"]},
+    {"from": "quote-post", "to": "post-scorer", "when": "the LinkedIn copy is publishable", "carries": ["publishable-linkedin-copy"]},
+    {"from": "editorial-visual-engine", "to": "post-writer", "when": "a natural voice-led LinkedIn caption is requested", "carries": ["source-analysis", "selected-angle", "caption-reference", "voice-context"]},
+    {"from": "editorial-visual-engine", "to": "post-formatter", "when": "a named caption framework is requested", "carries": ["source-analysis", "selected-angle", "framework", "voice-context"]},
+    {"from": "editorial-visual-engine", "to": "gemini-infographic", "when": "the user explicitly switches the generator to Gemini whiteboard output", "carries": ["locked-copy", "creative-direction"]},
+    {"from": "editorial-visual-engine", "to": "gemini-carousel", "when": "the user explicitly switches the generator to a Gemini carousel", "carries": ["carousel-brief", "brand-context"]},
+    {"from": "editorial-visual-engine", "to": "post-scorer", "when": "the LinkedIn caption is publishable", "carries": ["publishable-linkedin-copy"]},
+    {"from": "graphic-designer", "to": "post-scorer", "when": "the paired LinkedIn copy still needs evaluation", "carries": ["publishable-linkedin-copy"]},
+    {"from": "reels-scripting", "to": "pinned-comment", "when": "the published Reel needs a community follow-up", "carries": ["reel-script", "published-context", "voice-context"]}
+  ],
+  "guards": {
+    "maxSpecialistHops": 5,
+    "repeatNode": "only-after-user-revision-or-quality-failure",
+    "facts": "carry-forward-without-reinvention",
+    "approval": "never-overwrite-approved-state-silently",
+    "quality": "score-only-publishable-copy"
+  }
+}
