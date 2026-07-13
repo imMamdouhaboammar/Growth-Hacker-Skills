@@ -1,36 +1,48 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "growth-hacker-skills",
+  "description": "A connected marketplace of growth marketing skills maintained by Mamdouh Aboammar.",
+  "version": "2.0.0",
   "owner": {
     "name": "Mamdouh Aboammar",
-    "url": "https://github.com/imMamdouhaboammar"
+    "email": "mamdouhfces1997@gmail.com"
+  },
+  "renames": {
+    "social-media-skills": "growth-hacker-skills"
   },
   "plugins": [
     {
       "name": "growth-hacker-skills",
-      "source": ".",
-      "description": "A connected growth marketing skill library for research, positioning, voice, LinkedIn writing, source-led editorial visuals, ChatGPT Images prompts, Google Flow motion, video, community, and performance review.",
+      "displayName": "Growth Hacker Skills",
+      "source": "./",
+      "description": "Connects research, voice, content, editorial visuals, motion, community, and performance review through routed agent skills.",
       "version": "2.0.0",
-      "metadata": {
-        "categories": [
-          "marketing",
-          "growth",
-          "content",
-          "social-media",
-          "editorial-design"
-        ],
-        "tags": [
-          "agent skills",
-          "growth marketing",
-          "linkedin content",
-          "content strategy",
-          "editorial visuals",
-          "chatgpt images",
-          "google flow",
-          "claude code",
-          "source analysis",
-          "marketing workflows"
-        ]
-      }
+      "author": {
+        "name": "Mamdouh Aboammar",
+        "email": "mamdouhfces1997@gmail.com"
+      },
+      "homepage": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills#readme",
+      "repository": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills",
+      "license": "MIT",
+      "keywords": [
+        "growth-marketing",
+        "agent-skills",
+        "linkedin",
+        "content-strategy",
+        "editorial-design",
+        "source-analysis",
+        "chatgpt-images",
+        "google-flow"
+      ],
+      "category": "productivity",
+      "tags": [
+        "marketing",
+        "growth",
+        "social-media",
+        "editorial-visuals",
+        "content-workflows",
+        "claude-code"
+      ]
     }
   ]
 }
