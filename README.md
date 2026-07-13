@@ -1,155 +1,358 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Growth Hacker Skills for AI Agents" width="100%"/>
+  <img src="assets/banner.svg" alt="Growth Hacker Skills by Mamdouh Aboammar" width="100%"/>
 </p>
 
-# Growth Hacker Skills for AI Agents
+<p align="center">
+  <a href="https://skills.sh/imMamdouhaboammar/Growth-Hacker-Skills"><img src="https://skills.sh/b/imMamdouhaboammar/Growth-Hacker-Skills" alt="skills.sh installs"/></a>
+  <a href="https://github.com/imMamdouhaboammar/Growth-Hacker-Skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-F3C969" alt="MIT License"/></a>
+  <a href="https://github.com/imMamdouhaboammar/Growth-Hacker-Skills/blob/main/.claude-plugin/plugin.json"><img src="https://img.shields.io/badge/Claude_Plugin-2.0.0-D7FF4B" alt="Claude Plugin 2.0.0"/></a>
+  <a href="https://github.com/imMamdouhaboammar"><img src="https://img.shields.io/badge/by-Mamdouh_Aboammar-FF8A68" alt="By Mamdouh Aboammar"/></a>
+</p>
 
-A connected library of agent skills for research, positioning, content, editorial visuals, social publishing, video, community, and performance review.
+# Growth Hacker Skills
 
-This repository extends the original Social Media Skills system by connecting source analysis, voice, writing, visual direction, motion, and caption workflows into one usable content chain.
+A connected agent skill network for research, positioning, content, editorial visuals, motion, community, and performance review.
 
-## How the skills work together
+Created and maintained by **[Mamdouh Aboammar](https://github.com/imMamdouhaboammar)**.
 
-```text
-voice-builder
-  -> about-me.md + voice.md
-  -> post-writer / post-formatter
-  -> graphic-designer
-  -> post-scorer
+This repository is designed around one idea: a marketing workflow should not lose context every time it moves from research to writing, design, publishing, or analysis.
 
-content-matrix + repository/article/tool/document
-  -> editorial-visual-engine
-  -> ChatGPT Images prompts
-  -> Google Flow motion prompt
-  -> LinkedIn caption / X output
-  -> post-scorer
+Instead of isolated prompts, the repository uses a **Neural Link Protocol** that connects specialist skills through a main router, a machine-readable skill graph, a shared context bus, and explicit handoff contracts.
 
-explicit Gemini request
-  -> gemini-infographic or gemini-carousel
+## Install
+
+### SKILLS.sh
+
+Install the connected main skill:
+
+```bash
+npx skills add imMamdouhaboammar/Growth-Hacker-Skills
 ```
 
-### Routing rule
+Install the full specialist library:
 
-- Start with `graphic-designer` when you already have a finished post.
-- Start with `editorial-visual-engine` when you have a source link, repository, article, tool, release, document, or screenshots and want source analysis plus an editorial visual pack.
-- Use `gemini-infographic` or `gemini-carousel` only when Gemini output is explicitly requested.
+```bash
+npx skills add imMamdouhaboammar/Growth-Hacker-Skills \
+  --full-depth \
+  --skill '*' \
+  -a claude-code
+```
 
-## Available skills
+List all discoverable skills:
 
-<!-- SKILLS:START -->
-| Skill | Description |
-|---|---|
-| [voice-builder](skills/voice-builder/) | Build `about-me.md` and `voice.md` from an interview plus writing samples. |
-| [newsletter-voice](skills/newsletter-voice/) | Add newsletter-specific writing instructions to the voice foundation. |
-| [profile-optimizer](skills/profile-optimizer/) | Rebuild a LinkedIn profile for clearer positioning and conversion. |
-| [post-writer](skills/post-writer/) | Draft LinkedIn posts in the user's voice. |
-| [post-formatter](skills/post-formatter/) | Apply PAS, AIDA, BAB, STAR, or SLAY to a LinkedIn post. |
-| [hook-generator](skills/hook-generator/) | Generate multiple two-line hook options. |
-| [content-matrix](skills/content-matrix/) | Pair content pillars with eight formats to produce 32 or more ideas. |
-| [editorial-visual-engine](skills/editorial-visual-engine/) | Turn repositories, articles, tools, releases, documents, and screenshots into source-faithful editorial visuals, ChatGPT Images prompts, Google Flow motion prompts, and optional LinkedIn and X captions. |
-| [graphic-designer](skills/graphic-designer/) | Create a matching graphic from an existing post. |
-| [gemini-infographic](skills/gemini-infographic/) | Create an explicit Gemini whiteboard infographic prompt. |
-| [gemini-carousel](skills/gemini-carousel/) | Create explicit Gemini carousel prompts with an approval gate. |
-| [post-scorer](skills/post-scorer/) | Score a draft against the user's post history. |
-| [reels-scripting](skills/reels-scripting/) | Reverse-engineer an outlier Reel and write a new script. |
-| [youtube-thumbnail](skills/youtube-thumbnail/) | Turn a video title into a branded thumbnail prompt. |
-| [pinned-comment](skills/pinned-comment/) | Write a pinned comment with a matching image prompt. |
-| [niche-research](skills/niche-research/) | Find recent, date-verified stories in a niche. |
-| [quote-post](skills/quote-post/) | Write a quote and generate a matching image workflow. |
-| [analytics-dashboard](skills/analytics-dashboard/) | Turn a LinkedIn Analytics export into a dashboard and recommendations. |
-<!-- SKILLS:END -->
+```bash
+npx skills add imMamdouhaboammar/Growth-Hacker-Skills --full-depth --list
+```
 
-## Editorial Visual Engine
+Full guide: [docs/skills-sh.md](docs/skills-sh.md)
 
-The `editorial-visual-engine` skill adds the source-led workflow missing from post-first graphic tools.
+### Claude Code Plugin
 
-It includes:
+```bash
+claude plugin marketplace add imMamdouhaboammar/Growth-Hacker-Skills
+claude plugin install growth-hacker-skills@growth-hacker-skills
+```
 
-- Up to five source access methods before fallback
-- Source-only analysis by default
-- Source Integrity Block
-- 3 to 6 source-specific creative angles
-- Automatic format selection
-- Permanent editorial visual reference library
-- Permanent corpus of 11 complete caption references
-- Caption pattern selection based on source shape and reader job
-- English-only typography choices
-- Safe and Experimental ChatGPT Images prompts
-- Optional silent Google Flow motion prompt
-- Optional LinkedIn caption and X post or thread
-- Links to voice-builder, content-matrix, post-writer, post-formatter, hook-generator, graphic-designer, Gemini skills, and post-scorer
+Or use the installer from a cloned copy:
 
-Its permanent visual reference board is stored at:
+```bash
+git clone https://github.com/imMamdouhaboammar/Growth-Hacker-Skills.git
+cd Growth-Hacker-Skills
+bash scripts/install-claude-plugin.sh install
+```
 
-`skills/editorial-visual-engine/assets/reference-board.svg`
+Full guide: [docs/claude-plugin.md](docs/claude-plugin.md)
 
-Its permanent caption references are stored at:
-
-`skills/editorial-visual-engine/references/caption-reference-corpus.md`
-
-The corpus is used for structure, pacing, proof placement, list rhythm, and CTA shape. New captions must use facts and claims from the current source only.
-
-## Installation
-
-### Clone the repository
+### Clone or reference directly
 
 ```bash
 git clone https://github.com/imMamdouhaboammar/Growth-Hacker-Skills.git
 ```
 
-Copy the skill folders into the skills directory used by your agent, or reference the repository from your agent project.
+The repository follows the Agent Skills `SKILL.md` structure and can be used by agents that read skill folders directly.
 
-The skill files are agent-agnostic. Use the environment's native browser, web, repository, file, and structured-question tools when available.
+## What makes this repository different
 
-## Usage examples
+Most skill collections stop at discovery. You pick one skill, run it, then manually move the result into another skill.
+
+Growth Hacker Skills adds a connected layer:
 
 ```text
-"Build my voice"
-  -> voice-builder
-
-"Write a LinkedIn post about AI agents"
-  -> post-writer
-
-"Turn this finished post into a graphic"
-  -> graphic-designer
-
-"Analyse this repository and create the full editorial pack"
-  -> editorial-visual-engine
-
-"Turn this tool page into a ChatGPT Images prompt and a Google Flow loop"
-  -> editorial-visual-engine
-
-"Use the permanent caption references and write LinkedIn and X copy from this article"
-  -> editorial-visual-engine
-
-"Build a Gemini whiteboard infographic from this text"
-  -> gemini-infographic
-
-"Score this caption against my history"
-  -> post-scorer
+intent
+-> main router
+-> specialist node
+-> approved context packet
+-> next specialist node
+-> quality gate
+-> final deliverable
 ```
+
+The router does not run every skill. It chooses the smallest useful path and carries the approved state forward.
+
+## Neural Link Protocol
+
+The network is defined by four files:
+
+| File | Role |
+|---|---|
+| [`SKILL.md`](SKILL.md) | Main agent-agnostic router |
+| [`skill-graph.json`](skill-graph.json) | Nodes, edges, inputs, outputs, and routing guards |
+| [`docs/neural-linking.md`](docs/neural-linking.md) | Human-readable architecture and handoff rules |
+| [`templates/growth-context.md`](templates/growth-context.md) | Shared state template for multi-skill workflows |
+
+When file tools are available, multi-skill workflows can keep approved state in:
+
+```text
+.growth-hacker/context.md
+```
+
+The context bus stores decisions and evidence, not hidden reasoning.
+
+It carries:
+
+- Objective and target reader
+- Source access state
+- Verified facts, source claims, and inferences
+- Voice and brand constraints
+- Selected idea, angle, hook, and format
+- Approved copy and CTA
+- Completed nodes and next handoff
+- Open risks and quality notes
+
+## Connected workflow examples
+
+### Source to editorial content pack
+
+```text
+repository, article, AI skill, tool, release, document, or screenshots
+-> editorial-visual-engine
+-> source integrity block
+-> angle selection
+-> ChatGPT Images prompts
+-> Google Flow motion prompt
+-> LinkedIn and X captions
+-> post-scorer
+```
+
+### Idea to LinkedIn post and graphic
+
+```text
+content-matrix
+-> hook-generator
+-> post-writer
+-> graphic-designer
+-> post-scorer
+```
+
+### Research to publishable content
+
+```text
+niche-research
+-> content-matrix
+-> selected idea + verified source
+-> editorial-visual-engine
+```
+
+### Performance to the next content cycle
+
+```text
+analytics-dashboard
+-> content-matrix
+-> hook-generator
+-> post-writer
+```
+
+### Voice to positioning
+
+```text
+voice-builder
+-> profile-optimizer
+-> content-matrix
+-> post-writer
+```
+
+## Skill network
+
+### Core Network
+
+| Skill | Purpose |
+|---|---|
+| [`growth-hacker-skills`](skills/growth-hacker-skills/) | Claude plugin router for connected workflows |
+| [`voice-builder`](skills/voice-builder/) | Creates `about-me.md` and `voice.md` from an interview and writing samples |
+| [`newsletter-voice`](skills/newsletter-voice/) | Adds newsletter-specific writing rules to the voice foundation |
+
+### Research and Intelligence
+
+| Skill | Purpose |
+|---|---|
+| [`niche-research`](skills/niche-research/) | Finds recent stories and verifies dates |
+| [`analytics-dashboard`](skills/analytics-dashboard/) | Turns LinkedIn exports into a readable performance report and recommendations |
+| [`content-matrix`](skills/content-matrix/) | Pairs content pillars with eight formats to generate specific ideas |
+
+### Writing and Positioning
+
+| Skill | Purpose |
+|---|---|
+| [`profile-optimizer`](skills/profile-optimizer/) | Rebuilds LinkedIn positioning and profile copy |
+| [`hook-generator`](skills/hook-generator/) | Creates alternative hook directions for a topic or source |
+| [`post-writer`](skills/post-writer/) | Writes LinkedIn posts using the user's voice files |
+| [`post-formatter`](skills/post-formatter/) | Applies PAS, AIDA, BAB, STAR, or SLAY |
+
+### Editorial Visuals
+
+| Skill | Purpose |
+|---|---|
+| [`editorial-visual-engine`](skills/editorial-visual-engine/) | Turns links and sources into editorial visuals, captions, and motion prompts |
+| [`graphic-designer`](skills/graphic-designer/) | Creates a visual direction for an already-finished post |
+| [`gemini-infographic`](skills/gemini-infographic/) | Creates an explicit Gemini whiteboard infographic prompt |
+| [`gemini-carousel`](skills/gemini-carousel/) | Creates explicit Gemini carousel prompts with an approval gate |
+| [`quote-post`](skills/quote-post/) | Creates a quote-led post and matching visual workflow |
+| [`youtube-thumbnail`](skills/youtube-thumbnail/) | Converts a video title into a thumbnail prompt |
+
+### Video and Community
+
+| Skill | Purpose |
+|---|---|
+| [`reels-scripting`](skills/reels-scripting/) | Reverse-engineers an outlier Reel and writes a new script |
+| [`pinned-comment`](skills/pinned-comment/) | Writes a pinned comment and matching visual prompt |
+
+### Quality and Performance
+
+| Skill | Purpose |
+|---|---|
+| [`post-scorer`](skills/post-scorer/) | Scores publishable LinkedIn copy against the user's history |
+
+## Editorial Visual Engine
+
+The source-led visual workflow is the largest connected component in the repository.
+
+It accepts:
+
+- GitHub repositories, files, releases, issues, and pull requests
+- Articles and documentation
+- AI tools and AI skills
+- Product and launch pages
+- Uploaded documents
+- Screenshots
+- Existing posts
+
+It produces:
+
+- Source analysis
+- Source Integrity Block
+- 3 to 6 source-specific content angles
+- Format recommendation
+- English typography recommendation
+- Exact on-image copy
+- Safe and Experimental ChatGPT Images prompts
+- Optional silent Google Flow motion prompt
+- Optional LinkedIn caption
+- Optional X post or thread
+- QA notes
+
+### Permanent visual references
+
+The visual reference system includes eight editorial grammar families:
+
+- Benchmark field guide
+- Circular multi-agent map
+- Launch pipeline poster
+- Dark GTM architecture
+- Paper step playbook
+- Advisor board synthesis
+- Minimal terminal poster
+- Dense company org chart
+
+Reference board:
+
+[`skills/editorial-visual-engine/assets/reference-board.svg`](skills/editorial-visual-engine/assets/reference-board.svg)
+
+### Permanent caption references
+
+The skill includes 11 full caption references covering:
+
+- Time-sensitive guides
+- Operational build stories
+- Tool and skill launches
+- GTM workflows
+- Setup walkthroughs
+- Multi-agent concepts
+- API access guides
+- Strategic stack arguments
+- Product demos
+- Scheduled workflow lists
+- Large skill collections
+
+Caption corpus:
+
+[`skills/editorial-visual-engine/references/caption-reference-corpus.md`](skills/editorial-visual-engine/references/caption-reference-corpus.md)
+
+The corpus is used for structure, pacing, proof placement, list rhythm, and CTA shape. Facts and claims must still come from the current source.
+
+## Routing boundaries
+
+Use `editorial-visual-engine` when the request starts with a source and requires analysis, angle selection, source integrity, ChatGPT Images, Google Flow, or captions.
+
+Use `graphic-designer` when a finished post already exists and only needs a matching graphic.
+
+Use `gemini-infographic` or `gemini-carousel` only when Gemini output is explicitly requested.
+
+Use `post-writer` for natural voice-led writing.
+
+Use `post-formatter` when a named copy framework is required.
+
+Use `post-scorer` only after LinkedIn copy is ready to publish.
+
+## Distribution files
+
+```text
+SKILL.md
+skill-graph.json
+skills.sh.json
+.claude-plugin/plugin.json
+.claude-plugin/marketplace.json
+scripts/install-claude-plugin.sh
+scripts/validate-distribution.sh
+scripts/validate-skill-graph.py
+```
+
+## Documentation
+
+- [Neural linking architecture](docs/neural-linking.md)
+- [Claude Code Plugin](docs/claude-plugin.md)
+- [SKILLS.sh distribution](docs/skills-sh.md)
+- [Editorial Visual Engine](skills/editorial-visual-engine/README.md)
+- [Contribution guide](CONTRIBUTING.md)
 
 ## Validation
 
-Validate every skill:
+Run the complete local check:
 
 ```bash
-./validate-skills.sh
+bash validate-skills.sh
+bash skills/editorial-visual-engine/scripts/validate-package.sh
+python3 scripts/validate-skill-graph.py
+bash scripts/validate-distribution.sh
 ```
 
-Validate the connected package, including all 11 caption references:
+GitHub Actions runs the same structural checks for pushes and pull requests.
 
-```bash
-./skills/editorial-visual-engine/scripts/validate-package.sh
-```
+## Author and maintenance
 
-## Prerequisites
+**Mamdouh Aboammar**
 
-Some skills require external services:
+- GitHub: [@imMamdouhaboammar](https://github.com/imMamdouhaboammar)
+- LinkedIn: [mamdouh-aboammar](https://www.linkedin.com/in/mamdouh-aboammar/)
+- Website: [mamdouhaboammar.com](https://mamdouhaboammar.com)
 
-| Variable | Used by |
-|---|---|
-| `APIFY_API_TOKEN` | post-scorer, reels-scripting |
-| `GOOGLE_AI_API_KEY` | reels-scripting video analysis |
+Mamdouh leads the current architecture, source-led editorial workflow, Neural Link Protocol, cross-skill routing, distribution, documentation, and ongoing development of this repository.
 
-The `editorial-visual-engine` produces prompts rather than calling image or video APIs directly. Run its still prompts in ChatGPT Images and its optional motion prompt in Google Flow.
+## Attribution
+
+This repository began from the MIT-licensed Social Media Skills project by Charlie Hills and has since been reworked and extended into Growth Hacker Skills by Mamdouh Aboammar.
+
+See [NOTICE.md](NOTICE.md) for attribution details.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
