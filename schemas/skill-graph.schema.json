@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills/blob/main/schemas/skill-graph.schema.json",
+  "title": "Growth Hacker Skills Neural Graph",
+  "type": "object",
+  "required": ["name", "version", "owner", "router", "contextBus", "nodes", "edges", "guards"],
+  "properties": {
+    "name": {"type": "string", "const": "growth-hacker-skills"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "owner": {
+      "type": "object",
+      "required": ["name", "github"],
+      "properties": {
+        "name": {"type": "string"},
+        "github": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "router": {"type": "string"},
+    "contextBus": {
+      "type": "object",
+      "required": ["template", "runtimePath", "writePolicy"],
+      "properties": {
+        "template": {"type": "string"},
+        "runtimePath": {"type": "string"},
+        "writePolicy": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "stage", "consumes", "produces"],
+        "properties": {
+          "id": {"type": "string"},
+          "path": {"type": "string"},
+          "pluginPath": {"type": "string"},
+          "stage": {"type": "string"},
+          "consumes": {"type": "array", "items": {"type": "string"}},
+          "produces": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "when", "carries"],
+        "properties": {
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "when": {"type": "string"},
+          "carries": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "guards": {
+      "type": "object",
+      "required": ["maxSpecialistHops", "repeatNode", "facts", "approval", "quality"],
+      "properties": {
+        "maxSpecialistHops": {"type": "integer", "minimum": 1},
+        "repeatNode": {"type": "string"},
+        "facts": {"type": "string"},
+        "approval": {"type": "string"},
+        "quality": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
