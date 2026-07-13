@@ -1,19 +1,49 @@
 # Contributing
 
-Thanks for your interest in improving these skills. This guide covers how to add new skills, improve existing ones, and submit changes.
+Growth Hacker Skills is maintained by Mamdouh Aboammar and developed as a connected agent skill network.
+
+Changes should improve a specialist skill without breaking the handoffs, shared context, distribution formats, or quality gates around it.
 
 ## Quick start
 
-1. Fork the repo
-2. Create a feature branch (`feat/new-skill-name` or `fix/skill-name-issue`)
-3. Make your changes
-4. Run `./validate-skills.sh` to check your changes against the spec
-5. Open a PR
+1. Fork the repository
+2. Create a feature branch such as `feat/new-skill-name` or `fix/skill-name-issue`
+3. Make the change
+4. Update the Neural Link graph when routing or artifacts change
+5. Run the full validation set
+6. Open a pull request with sample input and output
 
-## Adding a new skill
+## Full validation
 
-1. Create a new folder under `skills/` with a lowercase hyphenated name matching the skill's `name` field.
-2. Add a `SKILL.md` file with YAML frontmatter.
+```bash
+bash validate-skills.sh
+bash skills/editorial-visual-engine/scripts/validate-package.sh
+python3 scripts/validate-skill-graph.py
+bash scripts/validate-distribution.sh
+```
+
+Claude plugin contributors should also run:
+
+```bash
+claude plugin validate .
+```
+
+SKILLS.sh contributors should verify both discovery modes:
+
+```bash
+npx skills add . --list
+npx skills add . --full-depth --list
+```
+
+## Adding a specialist skill
+
+Create:
+
+```text
+skills/my-new-skill/SKILL.md
+```
+
+The folder name and frontmatter `name` must match.
 
 Minimum frontmatter:
 
@@ -21,79 +51,175 @@ Minimum frontmatter:
 ---
 name: my-new-skill
 description: >
-  One or two sentences explaining what the skill does and when to use it. Include specific trigger phrases the user might say, like "write a post about", "score my draft", or "build me a carousel". The first word of the description should be a verb or action.
+  Use when the user needs a specific deliverable and describe the trigger conditions clearly.
 ---
 ```
 
-3. Write the skill body. Most skills follow this structure:
+Keep the skill focused on one capability. The main router coordinates multi-step work.
 
-```markdown
-# Skill Name
+A specialist skill should define:
 
-## CRITICAL: Auto-start on load
+- Trigger conditions
+- Required inputs
+- Available context files
+- Ordered workflow
+- Exact outputs
+- Handoff artifacts
+- Quality checks
+- Failure and fallback behaviour
+- Non-negotiable rules
 
-When this skill triggers, go straight to Step 1. Do not summarise. Start immediately.
+Keep `SKILL.md` under 500 lines. Move longer material into:
 
-## Step 1. Gather inputs
-[Use AskUserQuestion where possible]
-
-## Step 2. [Main work]
-
-## Step 3. Output
-[Code block showing the exact output format]
-
-## Rules
-[Non-negotiables. Voice rules, word limits, what never to do]
+```text
+skills/my-new-skill/references/
+skills/my-new-skill/assets/
+skills/my-new-skill/scripts/
 ```
 
-4. Keep `SKILL.md` under 500 lines. Move reference material to `skills/my-new-skill/references/`.
-5. If the skill has templates or assets, put them in `skills/my-new-skill/assets/`.
-6. If the skill runs shell scripts, put them in `skills/my-new-skill/scripts/`.
+## Connecting a new skill
+
+Every new specialist skill must be added to `skill-graph.json`.
+
+Define:
+
+- Node ID
+- Skill path
+- Workflow stage
+- Artifacts it consumes
+- Artifacts it produces
+- Incoming edges
+- Outgoing edges
+- Context carried by each edge
+
+Also add the skill to:
+
+- The routing table in `SKILL.md`
+- The Claude plugin skill directory under `skills/`
+- The relevant group in `skills.sh.json`
+- The README skill network
+- Distribution validation when the skill adds new required files
+
+Do not create an edge that carries no context.
+
+Do not create self-links.
+
+Do not create a new node when an existing specialist skill already owns the stage.
+
+## Shared context contract
+
+Multi-skill workflows use `templates/growth-context.md`.
+
+The context bus stores approved state:
+
+- Objective
+- Audience
+- Evidence
+- Verified facts
+- Source claims
+- Inferences
+- Voice and brand constraints
+- Selected angle and hook
+- Platform and format
+- CTA
+- Completed nodes
+- Next handoff
+- Risks
+
+Do not store hidden chain-of-thought.
+
+Do not silently replace an approved decision.
 
 ## Improving an existing skill
 
-- Keep the YAML frontmatter name matching the folder name.
-- Do not break the skill's trigger phrases in the description. Others rely on them.
-- If you change the output format, update the `## Output` section in the skill.
-- Test the skill in your own Claude project before opening a PR.
+Check whether the change affects:
+
+- Inputs or outputs
+- Trigger phrases
+- File locations
+- Cross-skill handoffs
+- Source integrity
+- Voice behaviour
+- Plugin discovery
+- SKILLS.sh discovery
+- Validation scripts
+
+When an artifact changes name or shape, update every graph edge and downstream skill that consumes it.
+
+## Source integrity
+
+Do not introduce external claims into a source-only workflow.
+
+Keep these categories separate:
+
+- Verified source facts
+- Claims made by the source
+- Inferences
+- Missing or unverified information
+
+Visual, caption, and writing skills must receive the same classification.
+
+## Reference use
+
+Voice files describe the user's writing style.
+
+Reference libraries describe structure, pacing, visual grammar, and layout logic.
+
+Do not copy a reference author's:
+
+- Personal experience
+- Identity
+- Product claims
+- Metrics
+- Dates
+- Links
+- Distinctive wording
 
 ## Style rules
 
-These rules apply to every skill in the repo:
+- Use clear English
+- Prefer short sentences
+- Do not use em dashes
+- Avoid generic marketing filler
+- Keep instructions agent-agnostic unless a skill explicitly targets one platform
+- Use native structured questions when available, with a compact text fallback
+- State exact output filenames when a skill writes files
+- Check dependencies before calling external services
 
-- British English throughout (spelling, "ise" not "ize")
-- Short sentences. No em dashes. No semicolons.
-- Never use: "leverage" (as a verb), "deep dive", "unlock", "game-changer", "groundbreaking"
-- Use AskUserQuestion for input gathering where a tool call is better than typing questions
-- Rules section at the bottom covers non-negotiables with "never" and "always" phrasing
-- Every skill that produces a file (like voice-builder writing `about-me.md`) states the exact filename and location
-- Every skill that depends on another skill's output checks for it before running
+## Distribution changes
 
-## Naming conventions
+When changing Claude plugin packaging:
 
-- Folder name = YAML `name` field = lowercase, hyphen-separated, no spaces
-- Skill names read as verb-object or noun phrases describing the output (`post-writer`, not `writing-posts`)
-- Keep names short. Three words max where possible.
+- Update `.claude-plugin/plugin.json`
+- Update `.claude-plugin/marketplace.json`
+- Keep versions aligned
+- Update `CHANGELOG.md`
+- Run `claude plugin validate .`
 
-## Testing locally
+When changing SKILLS.sh packaging:
 
-Copy your skill into Claude's skill directory:
+- Keep the root `SKILL.md` valid
+- Keep nested skills valid
+- Update `skills.sh.json`
+- Verify default and `--full-depth` discovery
 
-```bash
-cp -r skills/my-new-skill ~/.claude/skills/
+## Pull request format
+
+Use a clear title:
+
+```text
+feat: add my-new-skill
+fix: preserve source claims in editorial handoff
+docs: update Claude plugin installation
 ```
 
-Then trigger it in a new Claude conversation with the phrases listed in the description. Confirm:
+The pull request body should include:
 
-- Claude picks up the skill on the trigger phrase
-- Inputs are collected correctly (AskUserQuestion renders)
-- Output matches the format in the skill
-- All external dependencies (Apify, Gemini, etc.) are checked before use
+- What changed
+- Why it changed
+- Skills and graph edges affected
+- Validation commands run
+- Sample input and output when relevant
+- Any migration notes
 
-## Submitting a PR
-
-- Title: `feat: add [skill-name]` or `fix: [skill-name] [brief description]`
-- Body: describe what changed and why, include sample input/output if relevant
-- Link any related issue
-
-Questions? Open a GitHub issue.
+Questions and proposals can be opened as GitHub issues.
