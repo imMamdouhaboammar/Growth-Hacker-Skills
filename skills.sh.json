@@ -1,0 +1,61 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Core Network",
+      "description": "Routing, shared context, personal voice, and connected workflow foundations.",
+      "skills": [
+        "growth-hacker-skills",
+        "voice-builder",
+        "newsletter-voice"
+      ]
+    },
+    {
+      "title": "Research and Intelligence",
+      "description": "Find evidence, read performance data, and turn signals into content decisions.",
+      "skills": [
+        "niche-research",
+        "analytics-dashboard",
+        "content-matrix"
+      ]
+    },
+    {
+      "title": "Writing and Positioning",
+      "description": "Build positioning, hooks, LinkedIn posts, and framework-led copy.",
+      "skills": [
+        "profile-optimizer",
+        "hook-generator",
+        "post-writer",
+        "post-formatter"
+      ]
+    },
+    {
+      "title": "Editorial Visuals",
+      "description": "Turn sources and finished posts into visual systems, infographics, carousels, quotes, and thumbnails.",
+      "skills": [
+        "editorial-visual-engine",
+        "graphic-designer",
+        "gemini-infographic",
+        "gemini-carousel",
+        "quote-post",
+        "youtube-thumbnail"
+      ]
+    },
+    {
+      "title": "Video and Community",
+      "description": "Create short-form scripts and community follow-up content.",
+      "skills": [
+        "reels-scripting",
+        "pinned-comment"
+      ]
+    },
+    {
+      "title": "Quality and Performance",
+      "description": "Evaluate publishable LinkedIn copy and feed the findings into the next content cycle.",
+      "skills": [
+        "post-scorer"
+      ]
+    }
+  ]
+}
