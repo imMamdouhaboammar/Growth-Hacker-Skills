@@ -8,15 +8,31 @@ description: >
 
 ## Overview
 
-This is the main router for the Growth Hacker Skills repository.
+This is the main router for the Growth Hacker Skills network created and maintained by Mamdouh Aboammar.
 
-Use it to identify the correct specialist skill, preserve shared context between skills, and run multi-step workflows without duplicating work. The specialist skill owns its detailed rules. This router owns sequencing, handoffs, and output consistency.
+It identifies the correct specialist skill, preserves approved context between skills, and runs multi-step workflows without making every component rediscover the same information.
+
+The specialist skill owns its detailed craft rules. This router owns sequencing, handoffs, state, boundaries, and output consistency.
+
+## Required network files
+
+For multi-skill work, read these files before routing:
+
+1. `skill-graph.json`
+2. `docs/neural-linking.md`
+3. `templates/growth-context.md`
+
+`skill-graph.json` is the machine-readable map of nodes, inputs, outputs, edges, and guards.
+
+`docs/neural-linking.md` explains the human-readable protocol.
+
+`templates/growth-context.md` defines the shared context bus.
 
 ## Core principle
 
 Do not treat marketing tasks as isolated prompt requests.
 
-Route the work through the smallest useful chain of specialist skills, pass forward the approved outputs, and keep research, voice, claims, visuals, captions, and performance review aligned.
+Route the work through the smallest useful chain of specialist skills, pass approved outputs forward, and keep research, voice, claims, visuals, captions, and performance feedback aligned.
 
 ## Auto-start
 
@@ -24,11 +40,63 @@ When this skill triggers:
 
 1. Identify the user's final deliverable.
 2. Inspect the available source material and project context.
-3. Select one primary specialist skill.
-4. Add supporting skills only when they materially improve the result.
-5. Start the first required step immediately.
+3. Read the relevant graph nodes and edges from `skill-graph.json`.
+4. Select one primary specialist skill.
+5. Add supporting skills only when they produce a required artifact.
+6. Start the first required step immediately.
 
 Do not explain the entire repository before beginning the task.
+
+## Neural Link Protocol
+
+Every specialist skill is a node.
+
+Every handoff is an edge.
+
+Every edge carries approved context rather than a vague instruction to continue.
+
+For each multi-skill workflow:
+
+1. Resolve the route from `skill-graph.json`.
+2. Create or update the shared context bus when file tools exist.
+3. Run one node at a time.
+4. Store only approved decisions, verified evidence, clearly labelled source claims, and unresolved risks.
+5. Pass the declared edge payload to the next node.
+6. Stop when the requested deliverables are complete.
+
+The maximum normal route is five specialist hops. Repeat a node only after user revision or a failed quality gate.
+
+## Shared context bus
+
+When file tools are available and the request needs more than one specialist skill, create:
+
+```text
+.growth-hacker/context.md
+```
+
+Use `templates/growth-context.md` as the structure.
+
+The context bus carries:
+
+- Final objective
+- Target reader
+- Primary source and access status
+- Verified facts
+- Source claims
+- Inferences and missing information
+- Voice constraints
+- Brand constraints
+- Selected idea and angle
+- Approved hook or headline
+- Platform, format, typography, and CTA
+- Completed nodes
+- Current node
+- Next handoff
+- Quality risks
+
+Do not store hidden chain-of-thought. Store decisions, evidence, constraints, and short rationale only.
+
+Do not silently overwrite an approved decision. Record what changed and why.
 
 ## Shared project context
 
@@ -39,7 +107,8 @@ Before drafting content, check for these files when the environment provides fil
 - `newsletter-voice.md`
 - `brand-kit.md`
 - `colours.md`
-- The most recent approved post, brief, research note, or source analysis
+- `.growth-hacker/context.md`
+- The most recent approved post, brief, research note, source analysis, or performance report
 
 Use existing approved context instead of asking the user to repeat it.
 
@@ -49,6 +118,7 @@ When `about-me.md` or `voice.md` is missing and voice accuracy matters, route to
 
 | User need | Primary skill |
 |---|---|
+| Coordinate several growth skills | `skills/growth-hacker-skills/SKILL.md` |
 | Build a reusable personal writing voice | `skills/voice-builder/SKILL.md` |
 | Add newsletter-specific voice rules | `skills/newsletter-voice/SKILL.md` |
 | Rebuild a LinkedIn profile | `skills/profile-optimizer/SKILL.md` |
@@ -112,6 +182,20 @@ voice-builder when needed
 
 Do not run both unless the user explicitly wants a framework-led rewrite after a natural draft.
 
+## Research-first route
+
+Use this chain when current stories, evidence, or performance data must shape the content:
+
+```text
+niche-research or analytics-dashboard
+-> content-matrix
+-> hook-generator when needed
+-> post-writer or editorial-visual-engine
+-> post-scorer
+```
+
+Research nodes provide evidence and priorities. They do not own the final voice or visual direction.
+
 ## Editorial visual route
 
 For source-led editorial visuals:
@@ -150,7 +234,7 @@ If the user requests ChatGPT Images, Google Flow, source integrity, angle select
 When captions are requested from a source-led visual workflow:
 
 - Use `voice.md` and `about-me.md` as the primary voice source when available.
-- Use `editorial-visual-engine/references/caption-patterns.md` and `caption-reference-corpus.md` for structure.
+- Use `skills/editorial-visual-engine/references/caption-patterns.md` and `caption-reference-corpus.md` for structure.
 - Use `post-writer` rules for natural LinkedIn writing.
 - Use `post-formatter` rules only when a named framework is requested.
 - Use `hook-generator` before locking the final hook when stronger options are needed.
@@ -182,6 +266,8 @@ Do not score:
 
 Score the publishable LinkedIn copy, then revise only the areas supported by the score evidence.
 
+Use `analytics-dashboard` to send performance patterns back into `content-matrix` and `hook-generator` for the next cycle.
+
 ## Capability-adaptive behaviour
 
 Use the strongest tools available in the current agent environment.
@@ -193,6 +279,7 @@ Examples:
 - File tools for documents and project context
 - Structured question tools for batched choices
 - Image tools only when the user requests direct generation
+- Data tools for analytics exports
 
 When a specialist skill names a platform-specific tool that is unavailable, preserve the workflow and use the closest equivalent interaction. Do not stop merely because one named interface is absent.
 
@@ -208,9 +295,13 @@ Every handoff must carry forward:
 - Approved hook or headline
 - Platform and format
 - CTA decision
-- Any unresolved risks
+- Completed nodes
+- Open risks
+- The exact artifact the receiving node should produce
 
 Do not make the next skill rediscover information already approved.
+
+The receiving node must read the context packet before asking questions.
 
 ## Output discipline
 
@@ -229,10 +320,13 @@ Do not expose internal reasoning. Provide concise rationale, evidence, and decis
 
 ## Rules
 
+- Always read `skill-graph.json` for multi-skill routing.
 - Always route to the most specific specialist skill available.
 - Always preserve approved context between skills.
 - Always distinguish source facts, source claims, and inferences when source integrity matters.
 - Always use one primary skill and only the supporting skills required for the deliverable.
+- Always keep the root `SKILL.md` and `skills/growth-hacker-skills/SKILL.md` identical.
+- Never exceed five specialist hops without explicit user approval.
 - Never duplicate the same planning stage in two skills.
 - Never invent metrics, dates, integrations, testimonials, pricing, or product capabilities.
 - Never copy a reference creator's distinctive wording or personal claims.
