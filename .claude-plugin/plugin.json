@@ -1,0 +1,12 @@
+{
+  "name": "growth-hacker-skills",
+  "description": "A connected growth marketing skill library for research, voice, LinkedIn writing, source-led editorial visuals, ChatGPT Images prompts, Google Flow motion, video, community, and performance review.",
+  "version": "2.0.0",
+  "author": {
+    "name": "Mamdouh Aboammar",
+    "email": "mamdouhfces1997@gmail.com"
+  },
+  "homepage": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills",
+  "repository": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills",
+  "license": "MIT"
+}
