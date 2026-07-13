@@ -35,9 +35,10 @@ Read these files before producing the final pack:
 4. `references/visual-style-library.md`
 5. `references/typography-library.md`
 6. `references/caption-patterns.md` when captions are requested
-7. `references/motion-patterns.md` when motion is requested
-8. `references/integration-map.md`
-9. `references/reference-catalogue.md`
+7. `references/caption-reference-corpus.md` when captions are requested
+8. `references/motion-patterns.md` when motion is requested
+9. `references/integration-map.md`
+10. `references/reference-catalogue.md`
 
 Use the templates in `assets/` for the final output shape.
 
@@ -264,7 +265,12 @@ The prompt must require:
 First check for `about-me.md` and `voice.md` in the project.
 
 - If both exist, treat them as the primary voice source.
-- If they do not exist, use `references/caption-patterns.md` for structure and state that the caption is not voice-trained.
+- Always read both `references/caption-patterns.md` and `references/caption-reference-corpus.md` before drafting.
+- Select one primary corpus reference by structural fit. A second reference may supply one mechanism only, such as list rhythm or CTA shape.
+- Record the chosen reference ID in the creative direction or QA notes, never in the published caption.
+- Use the corpus for structure, pacing, proof placement, and CTA shape only.
+- Never import a reference author's personal experience, product claims, metrics, dates, links, access instructions, identity, or distinctive wording.
+- If no voice files exist, state that the caption is structurally trained by the permanent reference corpus but not voice-trained.
 - If the user requests a named framework such as PAS, AIDA, BAB, STAR, or SLAY, apply the `post-formatter` skill rules.
 - If the user requests natural voice-led writing, apply the `post-writer` skill rules.
 - If stronger hooks are needed, use the `hook-generator` skill.
@@ -272,9 +278,11 @@ First check for `about-me.md` and `voice.md` in the project.
 LinkedIn output:
 
 - Choose length based on the source, normally 150 to 300 words
+- Allow longer inventory posts only when the source genuinely needs them
 - Preserve source accuracy
 - Add useful detail not already visible in the graphic
 - End with the most natural CTA for the angle
+- Use a comment-keyword CTA only when the current user can fulfil it
 - Add hashtags only when requested
 
 X output:
@@ -282,6 +290,7 @@ X output:
 - Use one post when the idea fits clearly
 - Use a thread when compression would remove useful context
 - Do not duplicate the LinkedIn caption line for line
+- Keep the first post useful on its own
 
 ## Step 11. Run the final quality gate
 
@@ -298,6 +307,7 @@ Check every item:
 - Visual hierarchy
 - Reference compatibility
 - Caption and visual alignment
+- Caption corpus used structurally rather than copied
 - Source claim attribution
 - Motion safety
 - No fake logos or fictional UI
@@ -320,7 +330,7 @@ Use `assets/full-pack-output-template.md` in this order:
 8. Google Flow motion prompt, when requested
 9. LinkedIn caption, when requested
 10. X post or thread, when requested
-11. QA notes
+11. QA notes, including the selected visual reference ID and caption reference ID
 12. Optional machine-readable JSON, only when requested
 
 When file tools exist and the user asked to save the result, write:
@@ -352,10 +362,12 @@ Primary routes:
 - Always use English content and English fonts.
 - Always use ChatGPT Images for the still prompt unless the user explicitly requests another generator.
 - Always use Google Flow for the optional motion prompt.
+- Always use the permanent caption corpus when captions are requested.
 - Never add outside research in source-only mode.
 - Never infer a feature from a logo, screenshot, directory name, or marketing phrase alone.
 - Never copy a reference composition pixel for pixel.
 - Never mix more than two visual styles.
 - Never use fake product UI to imply a feature the source does not show.
+- Never copy a caption reference line for line or transfer its claims to a new source.
 - Never expose internal chain-of-thought. Provide concise rationale and evidence instead.
 - Never use em dashes in outputs.
