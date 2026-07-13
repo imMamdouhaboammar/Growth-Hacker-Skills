@@ -48,21 +48,29 @@ market = json.loads((root / ".claude-plugin" / "marketplace.json").read_text())
 graph = json.loads((root / "skill-graph.json").read_text())
 skills_page = json.loads((root / "skills.sh.json").read_text())
 
+assert plugin["$schema"] == "https://anthropic.com/claude-code/plugin.schema.json"
 assert plugin["name"] == "growth-hacker-skills"
 assert plugin["author"]["name"] == "Mamdouh Aboammar"
 assert plugin["version"] == graph["version"]
+assert plugin["keywords"]
+
 assert graph["owner"]["name"] == "Mamdouh Aboammar"
 assert graph["router"] == "growth-hacker-skills"
 
+assert market["$schema"] == "https://anthropic.com/claude-code/marketplace.schema.json"
 assert market["name"] == "growth-hacker-skills"
 assert market["owner"]["name"] == "Mamdouh Aboammar"
+assert market["renames"]["social-media-skills"] == "growth-hacker-skills"
 assert len(market["plugins"]) == 1
 entry = market["plugins"][0]
 assert entry["name"] == "growth-hacker-skills"
-assert entry["source"] == "."
+assert entry["source"] == "./"
 assert entry["version"] == plugin["version"]
+assert entry["author"]["name"] == "Mamdouh Aboammar"
+assert entry["category"]
+assert entry["tags"]
 
-assert skills_page["$schema"] == "https://skills.sh/schemas/skills.sh.schema.json"
+assert skills_page["$schema"] == "https://skills.sh/schema/skills.sh.json"
 assert skills_page["groupings"]
 
 grouped = {
