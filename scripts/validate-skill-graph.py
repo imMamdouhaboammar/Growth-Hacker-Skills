@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import defaultdict, deque
 from pathlib import Path
@@ -22,6 +23,11 @@ def load_json(path: Path) -> dict:
         fail(f"missing file: {path.relative_to(ROOT)}")
     except json.JSONDecodeError as exc:
         fail(f"invalid JSON in {path.relative_to(ROOT)}: {exc}")
+
+
+def frontmatter_value(content: str, key: str) -> str | None:
+    match = re.search(rf"^{re.escape(key)}:\s*(.+)$", content, flags=re.MULTILINE)
+    return match.group(1).strip() if match else None
 
 
 def main() -> None:
@@ -117,9 +123,19 @@ def main() -> None:
     root_skill = ROOT / "SKILL.md"
     plugin_skill = ROOT / "skills" / "growth-hacker-skills" / "SKILL.md"
     if not plugin_skill.is_file():
-        fail("Claude plugin router mirror is missing")
-    if root_skill.read_text(encoding="utf-8") != plugin_skill.read_text(encoding="utf-8"):
-        fail("root SKILL.md and plugin router SKILL.md are not identical")
+        fail("Claude plugin router is missing")
+
+    root_content = root_skill.read_text(encoding="utf-8")
+    plugin_content = plugin_skill.read_text(encoding="utf-8")
+
+    if frontmatter_value(root_content, "name") != "growth-hacker-skills":
+        fail("root SKILL.md name is invalid")
+    if frontmatter_value(plugin_content, "name") != "growth-hacker-skills":
+        fail("plugin router skill name is invalid")
+    if "../../SKILL.md" not in plugin_content:
+        fail("plugin router does not reference the canonical root SKILL.md")
+    if "../../skill-graph.json" not in plugin_content:
+        fail("plugin router does not reference skill-graph.json")
 
     expected_owner = graph["owner"].get("name")
     if expected_owner != "Mamdouh Aboammar":
