@@ -1,58 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="Social Media Skills by Charlie Hills">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="Growth Hacker Skills by Mamdouh Aboammar">
   <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0A2347" stroke-width="1"/>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#16301F" stroke-width="1"/>
     </pattern>
-    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00132F" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#00132F" stop-opacity="0.85"/>
-    </linearGradient>
+    <radialGradient id="glow" cx="83%" cy="45%" r="48%">
+      <stop offset="0%" stop-color="#D7FF4B" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#07110B" stop-opacity="0"/>
+    </radialGradient>
     <style>
-      .t-title { font: 700 76px 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif; fill: #FFFFFF; letter-spacing: -2px; }
-      .t-sub   { font: 500 26px 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif; fill: #58B6FF; letter-spacing: -0.3px; }
-      .t-meta  { font: 500 18px 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif; fill: #8FBEE8; letter-spacing: 0.5px; text-transform: uppercase; }
-      .chip    { font: 600 18px 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif; fill: #FFFFFF; letter-spacing: 0.3px; }
+      .title { font: 750 68px 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif; fill: #F7F8F2; letter-spacing: -2px; }
+      .sub { font: 500 24px 'Inter', 'Helvetica Neue', Arial, sans-serif; fill: #B8C6BA; letter-spacing: -0.2px; }
+      .meta { font: 650 17px 'IBM Plex Mono', 'SFMono-Regular', monospace; fill: #D7FF4B; letter-spacing: 1.5px; }
+      .chip { font: 650 16px 'Inter', 'Helvetica Neue', Arial, sans-serif; fill: #07110B; }
+      .node { font: 600 13px 'IBM Plex Mono', 'SFMono-Regular', monospace; fill: #F7F8F2; }
     </style>
   </defs>
 
-  <rect width="1280" height="360" fill="#00132F"/>
+  <rect width="1280" height="360" fill="#07110B"/>
   <rect width="1280" height="360" fill="url(#grid)"/>
-  <rect width="1280" height="360" fill="url(#fade)"/>
+  <rect width="1280" height="360" fill="url(#glow)"/>
 
-  <g transform="translate(72, 92)">
-    <text class="t-meta" x="0" y="0">Claude Skills · by Charlie Hills</text>
-    <text class="t-title" x="0" y="78">Social Media Skills</text>
-    <text class="t-sub" x="0" y="130">The 17 skills behind 350k followers and 100M+ views a year</text>
+  <g transform="translate(64, 72)">
+    <text class="meta" x="0" y="0">AGENT SKILL NETWORK · BY MAMDOUH ABOAMMAR</text>
+    <text class="title" x="0" y="82">Growth Hacker Skills</text>
+    <text class="sub" x="0" y="128">Research → Voice → Content → Editorial Visuals → Motion → Performance</text>
   </g>
 
-  <g transform="translate(72, 280)">
+  <g transform="translate(64, 274)">
     <g>
-      <rect x="0" y="0" width="130" height="40" rx="20" fill="#58B6FF"/>
-      <text class="chip" x="65" y="26" text-anchor="middle" fill="#00132F">LinkedIn</text>
+      <rect x="0" y="0" width="110" height="38" rx="19" fill="#D7FF4B"/>
+      <text class="chip" x="55" y="25" text-anchor="middle">Research</text>
     </g>
-    <g transform="translate(142, 0)">
-      <rect x="0" y="0" width="100" height="40" rx="20" fill="#3366FF"/>
-      <text class="chip" x="50" y="26" text-anchor="middle">Reels</text>
+    <g transform="translate(122, 0)">
+      <rect x="0" y="0" width="88" height="38" rx="19" fill="#F3C969"/>
+      <text class="chip" x="44" y="25" text-anchor="middle">Voice</text>
     </g>
-    <g transform="translate(254, 0)">
-      <rect x="0" y="0" width="120" height="40" rx="20" fill="#73E9C1"/>
-      <text class="chip" x="60" y="26" text-anchor="middle" fill="#00132F">YouTube</text>
+    <g transform="translate(222, 0)">
+      <rect x="0" y="0" width="102" height="38" rx="19" fill="#FF8A68"/>
+      <text class="chip" x="51" y="25" text-anchor="middle">Content</text>
     </g>
-    <g transform="translate(386, 0)">
-      <rect x="0" y="0" width="130" height="40" rx="20" fill="#FFD11A"/>
-      <text class="chip" x="65" y="26" text-anchor="middle" fill="#00132F">Analytics</text>
+    <g transform="translate(336, 0)">
+      <rect x="0" y="0" width="104" height="38" rx="19" fill="#8BE0C1"/>
+      <text class="chip" x="52" y="25" text-anchor="middle">Visuals</text>
     </g>
-    <g transform="translate(528, 0)">
-      <rect x="0" y="0" width="130" height="40" rx="20" fill="#DB8FFF"/>
-      <text class="chip" x="65" y="26" text-anchor="middle" fill="#00132F">Newsletter</text>
+    <g transform="translate(452, 0)">
+      <rect x="0" y="0" width="96" height="38" rx="19" fill="#A7B8FF"/>
+      <text class="chip" x="48" y="25" text-anchor="middle">Motion</text>
+    </g>
+    <g transform="translate(560, 0)">
+      <rect x="0" y="0" width="112" height="38" rx="19" fill="#F7F8F2"/>
+      <text class="chip" x="56" y="25" text-anchor="middle">Analytics</text>
     </g>
   </g>
 
-  <g transform="translate(980, 80)" opacity="0.9">
-    <circle cx="100" cy="100" r="98" fill="none" stroke="#58B6FF" stroke-width="2"/>
-    <circle cx="100" cy="100" r="70" fill="none" stroke="#58B6FF" stroke-width="2" stroke-dasharray="4 6"/>
-    <circle cx="100" cy="100" r="42" fill="#58B6FF" opacity="0.15"/>
-    <circle cx="100" cy="100" r="14" fill="#58B6FF"/>
-    <text class="t-meta" x="100" y="244" text-anchor="middle" fill="#8FBEE8">voice-builder · the foundation</text>
+  <g transform="translate(918, 54)">
+    <path d="M122 84 L58 44 M122 84 L42 118 M122 84 L204 42 M122 84 L220 116 M122 84 L124 196 M58 44 L42 118 M204 42 L220 116 M42 118 L124 196 M220 116 L124 196" fill="none" stroke="#365A3F" stroke-width="2"/>
+
+    <circle cx="122" cy="84" r="43" fill="#D7FF4B"/>
+    <circle cx="58" cy="44" r="26" fill="#173520" stroke="#8BE0C1" stroke-width="2"/>
+    <circle cx="42" cy="118" r="26" fill="#173520" stroke="#F3C969" stroke-width="2"/>
+    <circle cx="204" cy="42" r="26" fill="#173520" stroke="#FF8A68" stroke-width="2"/>
+    <circle cx="220" cy="116" r="26" fill="#173520" stroke="#A7B8FF" stroke-width="2"/>
+    <circle cx="124" cy="196" r="29" fill="#173520" stroke="#F7F8F2" stroke-width="2"/>
+
+    <text class="node" x="122" y="80" text-anchor="middle" fill="#07110B">MAIN</text>
+    <text class="node" x="122" y="97" text-anchor="middle" fill="#07110B">ROUTER</text>
+    <text class="node" x="58" y="48" text-anchor="middle">R</text>
+    <text class="node" x="42" y="122" text-anchor="middle">V</text>
+    <text class="node" x="204" y="46" text-anchor="middle">C</text>
+    <text class="node" x="220" y="120" text-anchor="middle">D</text>
+    <text class="node" x="124" y="200" text-anchor="middle">QA</text>
+
+    <text class="meta" x="124" y="258" text-anchor="middle">NEURAL LINK PROTOCOL</text>
   </g>
 </svg>
