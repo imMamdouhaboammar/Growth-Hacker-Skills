@@ -1,0 +1,48 @@
+name: Validate Skills Network
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DISABLE_TELEMETRY: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate every specialist skill
+        run: bash validate-skills.sh
+
+      - name: Validate Editorial Visual Engine
+        run: bash skills/editorial-visual-engine/scripts/validate-package.sh
+
+      - name: Validate Neural Link graph
+        run: python3 scripts/validate-skill-graph.py
+
+      - name: Validate distribution files
+        run: bash scripts/validate-distribution.sh
+
+      - name: Verify default SKILLS.sh discovery
+        run: npx --yes skills add . --list
+
+      - name: Verify full-depth SKILLS.sh discovery
+        run: npx --yes skills add . --full-depth --list
