@@ -1,85 +1,104 @@
 ---
 name: post-formatter
 description: >
-  Turn a topic or an editorial-visual-engine source analysis into a ready-to-publish LinkedIn post using PAS, AIDA, BAB, STAR, or SLAY. Use when the user names a framework, asks to format a post, or wants a strict framework-led caption. Use editorial-visual-engine first when the request starts from a source link and also needs visual or motion prompts.
+  Turn a topic into a ready-to-publish LinkedIn post using PAS, AIDA, BAB, STAR, or SLAY frameworks. 200 to 250 words, 20 lines max, mobile-formatted with blank lines between sentences. Use this skill whenever the user says "format this as a post", "turn this into a LinkedIn post", "write it as PAS" or any named framework, or wants a properly structured post from a topic. Different from post-writer: post-formatter applies a strict framework. post-writer drafts in the user's voice without framework constraints. When a source link also needs visual or motion prompts, use editorial-visual-engine first and apply this skill at its caption stage.
 ---
 
 # Post Formatter
 
 ## CRITICAL: Auto-start on load
 
-When this skill triggers, go straight to Step 1. Do not summarise.
+When this skill triggers, go straight to Step 1. Do not summarise. Start input gathering immediately.
+
+## Routing boundary
+
+If the user supplied a source link and also wants source analysis, visual prompts, motion, or X copy, route to `editorial-visual-engine`. Apply this skill at its caption stage when a named framework is selected.
 
 ## Step 1. Gather inputs
 
-If the user supplied a source link and also wants source analysis, visual prompts, motion, or X copy, route to `editorial-visual-engine`. Apply this skill only at its caption stage.
+Call AskUserQuestion:
 
-Otherwise ask in one batch:
+```json
+[
+  {
+    "question": "What topic do you want to post about?",
+    "header": "Topic",
+    "multiSelect": false,
+    "options": [
+      {"label": "I will type the topic", "description": "Single sentence describing the subject"},
+      {"label": "Paste a context dump", "description": "Notes, stats, transcripts to turn into a post"}
+    ]
+  },
+  {
+    "question": "Which framework?",
+    "header": "Framework",
+    "multiSelect": false,
+    "options": [
+      {"label": "PAS", "description": "Problem, Agitation, Solution"},
+      {"label": "AIDA", "description": "Attention, Interest, Desire, Action"},
+      {"label": "BAB", "description": "Before, After, Bridge"},
+      {"label": "STAR", "description": "Situation, Task, Action, Result"},
+      {"label": "SLAY", "description": "Story, Lesson, Actionable advice, You"},
+      {"label": "Pick for me", "description": "Recommend the best framework based on the topic"}
+    ]
+  }
+]
+```
 
-1. Topic input
-   - I will type the topic
-   - Paste a context dump
-   - Use the active editorial-visual-engine Source Analysis
+Ask one follow-up:
 
-2. Framework
-   - PAS
-   - AIDA
-   - BAB
-   - STAR
-   - SLAY
-   - Pick for me
+> Anything else I should know? Facts, stats, tone notes, or who this is for.
 
-Ask one compact follow-up for facts, audience, and tone only when missing.
+Wait for response.
 
 ## Step 2. Write the post
 
-Global rules:
+Apply these global rules to every output:
 
-- Maximum 20 lines
-- Normally 200 to 250 words
-- Blank line between lines or short paragraphs
-- Most lines contain one sentence
-- Use clear words and remove filler
+- Maximum 20 lines, 200 to 250 words total (~1,200 characters)
+- Blank line after every line
+- Most lines: one sentence, 55 characters or fewer
+- Up to 4 lines may be mini-paragraphs (2 to 3 sentences, 110 characters or fewer)
+- Grade 6 words. Zero adverbs, zero jargon, zero fluff
 - No em dashes
-- No questions unless the hook is a question
-- No unnecessary emojis
-- Use at most two trios
-- Vary sentence starts
-- When a Source Integrity Block exists, keep all facts and attribution aligned with it
+- No questions unless the hook itself is a question
+- No emojis except checkmarks for numbered lists (1. 2. 3.) and the recycle symbol in the CTA
+- Rule of Three: use at most two trios per post
+- Vary sentence starts. Do not over-use "I"
+- When a Source Integrity Block exists, keep every fact and attribution aligned with it
 - In source-only mode, do not add outside evidence
 
 ## Step 3. Structure
 
-- Hook: 50 characters or fewer when possible
-- Twist or contrast: one concise line
-- Core: apply the selected framework across clear stages
-- Wrap: lock the lesson and use one appropriate CTA
+- **Line 1 (Hook)**: Bold. 50 characters or fewer.
+- **Line 2 (Twist / Contrast)**: 50 characters or fewer. Opposes or surprises the hook.
+- **Lines 3 to 18 (Core)**: The chosen framework, split across 3 to 5 lines per stage. Any list inside a stage must have exactly three items (1. 2. 3.). Use arrows to show flow where useful.
 
 Framework maps:
 
-- PAS: Problem -> Agitation -> Solution
-- AIDA: Attention -> Interest -> Desire -> Action
-- BAB: Before -> After -> Bridge
-- STAR: Situation -> Task -> Action -> Result
-- SLAY: Story -> Lesson -> Actionable advice -> You
+- **PAS**: Problem -> Agitation -> Solution
+- **AIDA**: Attention -> Interest -> Desire -> Action
+- **BAB**: Before -> After -> Bridge
+- **STAR**: Situation -> Task -> Action -> Result
+- **SLAY**: Story -> Lesson -> Actionable advice -> You
+
+- **Lines 19 to 20 (Wrap and CTA)**: 2 to 3 lines that lock the lesson. Close with one of these phrases followed by the recycle symbol: "Repost if", "Repost this", or "If this helped, repost".
 
 ## Step 4. Output
 
-Output the finished post inside a plain code block. When running inside `editorial-visual-engine`, return the finished caption to the Full Pack without separate meta-commentary.
+Output the finished post inside a code block. No preamble, no trailing notes. When running inside editorial-visual-engine, return the finished caption to the Full Pack.
 
 ## Step 5. Offer the next move
 
-Offer one relevant route:
+After the post, ask:
 
-- `graphic-designer` for a post-first visual
-- `editorial-visual-engine` for a source-led ChatGPT Images and Google Flow pack
-- `post-scorer` for evaluation
+> Want a matching post-first graphic (`graphic-designer`), a source-led ChatGPT Images and Google Flow pack (`editorial-visual-engine`), or a score against your post history (`post-scorer`)?
 
 ## Rules
 
-- Enforce the selected framework.
-- Count line and word limits when used independently.
+- Return the finished post only. No meta-commentary.
+- Enforce line length, word count, and lines count limits. Count them.
 - Never use em dashes.
-- Use British English unless voice.md specifies otherwise.
-- Tune tone and rhythm to voice.md when available.
-- If a trio is used, it has exactly three items.
+- British English unless voice.md specifies otherwise.
+- If the user has voice.md in the project, tune tone and rhythm to match it.
+- If a trio is used, it has exactly three items. Not two, not four.
