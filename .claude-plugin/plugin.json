@@ -1,12 +1,24 @@
 {
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "growth-hacker-skills",
-  "description": "A connected growth marketing skill library for research, voice, LinkedIn writing, source-led editorial visuals, ChatGPT Images prompts, Google Flow motion, video, community, and performance review.",
+  "description": "Connects research, voice, content, editorial visuals, motion, community, and performance review through routed agent skills.",
   "version": "2.0.0",
   "author": {
     "name": "Mamdouh Aboammar",
-    "email": "mamdouhfces1997@gmail.com"
+    "email": "mamdouhfces1997@gmail.com",
+    "url": "https://github.com/imMamdouhaboammar"
   },
-  "homepage": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills",
+  "homepage": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills#readme",
   "repository": "https://github.com/imMamdouhaboammar/Growth-Hacker-Skills",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "growth-marketing",
+    "agent-skills",
+    "linkedin",
+    "content-strategy",
+    "editorial-design",
+    "source-analysis",
+    "chatgpt-images",
+    "google-flow"
+  ]
 }
