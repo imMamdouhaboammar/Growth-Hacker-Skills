@@ -6,12 +6,18 @@ SCOPE="${CLAUDE_PLUGIN_SCOPE:-user}"
 SOURCE="${CLAUDE_PLUGIN_SOURCE:-imMamdouhaboammar/Growth-Hacker-Skills}"
 MARKETPLACE="growth-hacker-skills"
 PLUGIN="growth-hacker-skills@${MARKETPLACE}"
+LEGACY_MARKETPLACE="social-media-skills"
+LEGACY_PLUGIN="social-media-skills@${LEGACY_MARKETPLACE}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/install-claude-plugin.sh [install|update|validate|uninstall]
+  bash scripts/install-claude-plugin.sh install
+  bash scripts/install-claude-plugin.sh update
+  bash scripts/install-claude-plugin.sh migrate
+  bash scripts/install-claude-plugin.sh validate
+  bash scripts/install-claude-plugin.sh uninstall
 
 Environment variables:
   CLAUDE_PLUGIN_SCOPE   user, project, or local. Default: user
@@ -39,28 +45,27 @@ validate_scope() {
   esac
 }
 
+marketplace_json() {
+  claude plugin marketplace list --json 2>/dev/null || printf '[]\n'
+}
+
 marketplace_exists() {
-  claude plugin marketplace list --json 2>/dev/null \
-    | grep -Eq '"name"[[:space:]]*:[[:space:]]*"growth-hacker-skills"'
+  local name="$1"
+  marketplace_json | grep -Eq '"name"[[:space:]]*:[[:space:]]*"'"$name"'"'
 }
 
-validate_local_package() {
-  if [[ -f "$ROOT/.claude-plugin/marketplace.json" ]]; then
-    claude plugin validate "$ROOT"
-  else
-    echo "Local marketplace manifest not found at $ROOT/.claude-plugin/marketplace.json" >&2
-    exit 1
-  fi
-}
-
-install_plugin() {
-  if marketplace_exists; then
+add_or_refresh_marketplace() {
+  if marketplace_exists "$MARKETPLACE"; then
     echo "Refreshing marketplace: $MARKETPLACE"
     claude plugin marketplace update "$MARKETPLACE"
   else
     echo "Adding marketplace from: $SOURCE"
     claude plugin marketplace add "$SOURCE" --scope "$SCOPE"
   fi
+}
+
+install_plugin() {
+  add_or_refresh_marketplace
 
   echo "Installing plugin: $PLUGIN"
   claude plugin install "$PLUGIN" --scope "$SCOPE"
@@ -69,16 +74,47 @@ install_plugin() {
 }
 
 update_plugin() {
-  if ! marketplace_exists; then
-    echo "Marketplace is not configured yet. Running installation first."
-    install_plugin
-    return
-  fi
+  add_or_refresh_marketplace
 
-  claude plugin marketplace update "$MARKETPLACE"
+  echo "Applying the current plugin version: $PLUGIN"
   claude plugin install "$PLUGIN" --scope "$SCOPE"
   echo "Updated $PLUGIN."
   echo "Run /reload-plugins in an active Claude Code session."
+}
+
+migrate_plugin() {
+  echo "Installing the Growth Hacker Skills plugin before removing legacy entries."
+  install_plugin
+
+  if marketplace_exists "$LEGACY_MARKETPLACE"; then
+    echo "Removing the legacy plugin when present: $LEGACY_PLUGIN"
+    claude plugin uninstall "$LEGACY_PLUGIN" --scope "$SCOPE" 2>/dev/null || true
+
+    echo "Removing legacy marketplace declaration: $LEGACY_MARKETPLACE"
+    claude plugin marketplace remove "$LEGACY_MARKETPLACE" --scope "$SCOPE" 2>/dev/null || true
+  else
+    echo "No legacy marketplace declaration found."
+  fi
+
+  echo "Migration complete. The active namespace is growth-hacker-skills."
+  echo "Run /reload-plugins in an active Claude Code session."
+}
+
+validate_local_package() {
+  echo "Validating Claude plugin and marketplace manifests."
+  claude plugin validate "$ROOT"
+
+  echo "Validating specialist skill frontmatter and structure."
+  bash "$ROOT/validate-skills.sh"
+
+  echo "Validating Editorial Visual Engine package."
+  bash "$ROOT/skills/editorial-visual-engine/scripts/validate-package.sh"
+
+  echo "Validating Neural Link graph."
+  python3 "$ROOT/scripts/validate-skill-graph.py"
+
+  echo "Validating distribution files."
+  bash "$ROOT/scripts/validate-distribution.sh"
 }
 
 uninstall_plugin() {
@@ -96,6 +132,9 @@ case "$ACTION" in
     ;;
   update)
     update_plugin
+    ;;
+  migrate)
+    migrate_plugin
     ;;
   validate)
     validate_local_package
