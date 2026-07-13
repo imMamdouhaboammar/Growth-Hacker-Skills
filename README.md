@@ -70,7 +70,9 @@ It includes:
 - Source Integrity Block
 - 3 to 6 source-specific creative angles
 - Automatic format selection
-- Permanent editorial reference library
+- Permanent editorial visual reference library
+- Permanent corpus of 11 complete caption references
+- Caption pattern selection based on source shape and reader job
 - English-only typography choices
 - Safe and Experimental ChatGPT Images prompts
 - Optional silent Google Flow motion prompt
@@ -80,6 +82,12 @@ It includes:
 Its permanent visual reference board is stored at:
 
 `skills/editorial-visual-engine/assets/reference-board.svg`
+
+Its permanent caption references are stored at:
+
+`skills/editorial-visual-engine/references/caption-reference-corpus.md`
+
+The corpus is used for structure, pacing, proof placement, list rhythm, and CTA shape. New captions must use facts and claims from the current source only.
 
 ## Installation
 
@@ -111,6 +119,9 @@ The skill files are agent-agnostic. Use the environment's native browser, web, r
 "Turn this tool page into a ChatGPT Images prompt and a Google Flow loop"
   -> editorial-visual-engine
 
+"Use the permanent caption references and write LinkedIn and X copy from this article"
+  -> editorial-visual-engine
+
 "Build a Gemini whiteboard infographic from this text"
   -> gemini-infographic
 
@@ -126,7 +137,7 @@ Validate every skill:
 ./validate-skills.sh
 ```
 
-Validate the new connected package:
+Validate the connected package, including all 11 caption references:
 
 ```bash
 ./skills/editorial-visual-engine/scripts/validate-package.sh
@@ -142,13 +153,3 @@ Some skills require external services:
 | `GOOGLE_AI_API_KEY` | reels-scripting video analysis |
 
 The `editorial-visual-engine` produces prompts rather than calling image or video APIs directly. Run its still prompts in ChatGPT Images and its optional motion prompt in Google Flow.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Keep each skill's folder name aligned with its frontmatter `name`, keep `SKILL.md` under 500 lines where possible, and place large references in `references/` or `assets/`.
-
-## Licence
-
-[MIT](LICENSE).
-
-The repository includes and extends ideas from Charlie Hills' open-source Social Media Skills project. Original source: `charlie947/social-media-skills`.
