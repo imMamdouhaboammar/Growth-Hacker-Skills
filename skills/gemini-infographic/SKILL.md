@@ -1,78 +1,88 @@
 ---
 name: gemini-infographic
 description: >
-  Generate a hand-drawn whiteboard infographic prompt for Gemini from supplied content. Use when the user explicitly asks for a Gemini whiteboard, hand-drawn graphic, or notebook infographic. When the input is a source link and the user wants source integrity, creative angles, ChatGPT Images prompts, Google Flow motion, or LinkedIn and X captions together, use editorial-visual-engine instead.
+  Generate the hand-drawn whiteboard infographic prompt that pulled 480k impressions across 3 posts. Takes source content (a post, newsletter, blog, research note) and returns a complete Gemini image generation prompt with a structured brief. Use this skill whenever the user says "whiteboard infographic", "gemini infographic", "hand-drawn graphic", "turn this into a whiteboard", or wants an AI-generated infographic for a post. When a source link needs source integrity, creative angles, ChatGPT Images, Google Flow motion, or LinkedIn and X captions together, use editorial-visual-engine instead.
 ---
 
 # Gemini Infographic
 
 ## CRITICAL: Auto-start on load
 
-When this skill triggers, go straight to Step 1. Do not summarise.
+When this skill triggers, go straight to Step 1. Do not summarise the process.
 
 ## Routing boundary
 
-Use `editorial-visual-engine` instead when the request includes a repository, article, AI skill, tool, product, release, document, screenshot set, or source link plus any of these:
+Use `editorial-visual-engine` instead when the request begins with a repository, article, AI skill, tool, product, release, document, screenshots, or source link and includes source analysis, a Source Integrity Block, multiple creative angles, ChatGPT Images output, Google Flow motion, or LinkedIn and X captions in one run.
 
-- Source analysis
-- Source Integrity Block
-- Multiple creative angles
-- ChatGPT Images output
-- Google Flow motion
-- LinkedIn and X captions in the same run
-
-Continue here only when Gemini whiteboard output is explicitly requested.
+Continue here when Gemini whiteboard output is explicitly requested.
 
 ## Step 1. Get the source content
 
 Ask:
 
-> Paste the content you want to turn into a hand-drawn Gemini infographic. A post, newsletter section, article extract, research note, or bullet list works.
+> Paste the content you want to turn into an infographic. A post, newsletter section, blog, research note, or raw bullet points all work.
 
 Wait for the content.
 
 ## Step 2. Build the brief
 
-Analyse the content and produce:
+Analyse the content and produce an infographic brief in plain language. Include:
 
-- Title: 6 words or fewer
-- Optional subtitle
-- Core structure: steps, framework, comparison, stats, or list
-- 3 to 7 key points, each 10 words or fewer
-- Specific visual suggestions
-- Footer CTA approved by the user
+- **Title** (6 words or fewer, punchy)
+- **Subtitle** (optional, one line of context)
+- **Core structure**: decide between steps, framework, comparison, stats, or list
+- **Key points**: 3 to 7 bullets max, each 10 words or fewer
+- **Visual suggestions**: arrows, boxes, highlighted numbers, icons, color accents. Be specific about placement and colour.
+- **Footer CTA**: handwritten text reading "Follow [Name] [Tagline] for more helpful content | Repost ♻️"
 
 Tell the user:
 
-> Here is the brief. Tell me what to change, or say "generate" when it is ready.
+> Here is the brief. Tell me what to change, or say "generate" when you're happy.
 
 Wait for approval.
 
 ## Step 3. Output the Gemini prompt
 
+Once approved, output the full prompt in a code block, with the brief inserted into the placeholder:
+
 ```text
-Generate one image of a physical, hand-drawn infographic on a large whiteboard or notebook page.
+Generate a single image of a physical, hand-drawn infographic on a large whiteboard or notebook page.
 
-Medium: Make the image look like a photograph of a real whiteboard or paper notepad.
-Texture: Use coloured marker pens and highlighters. Lines are slightly imperfect and show ink texture.
-No digital fonts: All text appears handwritten or hand-printed in marker pen.
-Canvas: 1080 x 1350 pixels.
+Crucial Style Instructions (Read First):
 
-[Insert the approved title, subtitle, structure, exact key points, and visual placement]
+Medium: The image must look like a photograph of a real whiteboard or large paper notepad.
 
-Keep text large and legible. Do not add text. Include the exact approved footer.
+Texture: All elements must look created by hand using colored marker pens (black, blue, red, green) and highlighters (yellow/orange). Lines should be slightly imperfect, wobbly, and have the texture of ink on a surface.
+
+No Digital Fonts: All text, headings, and bullet points must appear handwritten or hand-printed in marker pen.
+
+Layout: Structure the 1080x1350 image as follows:
+
+[INSERT THE APPROVED BRIEF HERE: title, subtitle, core structure, key points, visual suggestions]
+
+Use multi-colored markers for emphasis. Keep text large and legible. Make everything look hand-drawn with slight imperfections. Make it look like a photograph of an actual notebook page.
+
+Always include the handwritten text "Follow [Name] [Tagline] for more helpful content | Repost ♻️" at the bottom of the image, in the same hand-drawn marker style.
 ```
+
+Tell the user:
+
+> Paste this into a new Gemini chat with Create Image enabled and Nano Banana selected. Generate at 1080x1350.
 
 ## Step 4. Offer iteration
 
-Offer to adjust title size, colour count, layout direction, or density after the first generation.
+After the prompt, offer:
+
+> If the first generation misses, tell me what to adjust and I will rewrite the prompt. Common fixes: fewer colours, bigger title, different layout direction.
 
 ## Rules
 
-- Use this skill only for explicit Gemini whiteboard output.
+- Use this skill for explicit Gemini whiteboard output.
 - Route source-led Full Pack requests to editorial-visual-engine.
-- Use 1080 x 1350 pixels.
+- 1080x1350 pixel output is non-negotiable.
+- Footer CTA always includes the recycle symbol and "Repost".
+- Never use em dashes in any output.
 - Keep bullets under 10 words.
-- Wait for brief approval before the final prompt.
-- Never use em dashes.
-- Use British English unless voice.md specifies otherwise.
+- Always wait for user approval of the brief before outputting the final prompt.
+- British English unless voice.md says otherwise.
+- If the user has brand-kit.md or colours.md in the project, bake their brand colours into the visual suggestions.
