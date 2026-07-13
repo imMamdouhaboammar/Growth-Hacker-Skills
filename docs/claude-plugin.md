@@ -1,8 +1,17 @@
 # Claude Code Plugin
 
-Growth Hacker Skills can be installed as a Claude Code plugin from its own marketplace.
+Growth Hacker Skills is distributed as a Claude Code plugin and marketplace maintained by Mamdouh Aboammar.
 
-The plugin exposes every folder under `skills/` through the `growth-hacker-skills` namespace. The repository-level `SKILL.md` remains the main router for agent-agnostic installation through SKILLS.sh.
+The plugin root contains the complete connected network:
+
+- Specialist skills under `skills/`
+- Main Claude router at `skills/growth-hacker-skills/SKILL.md`
+- Canonical agent-agnostic router at `SKILL.md`
+- Neural graph at `skill-graph.json`
+- Shared context template at `templates/growth-context.md`
+- Reference libraries, assets, scripts, and documentation
+
+Because the marketplace plugin source is the repository root, Claude Code copies the complete package into its plugin cache. The router can therefore read the graph and shared files without depending on paths outside the plugin.
 
 ## Requirements
 
@@ -10,7 +19,7 @@ The plugin exposes every folder under `skills/` through the `growth-hacker-skill
 - Git access to the repository
 - A trusted installation environment
 
-Check the installed version:
+Check the installed Claude Code version:
 
 ```bash
 claude --version
@@ -24,23 +33,28 @@ From a cloned copy of the repository:
 bash scripts/install-claude-plugin.sh install
 ```
 
-The script:
+The installer:
 
 1. Checks that the `claude` command is available
-2. Validates the installation scope
+2. Validates `user`, `project`, or `local` scope
 3. Adds the `growth-hacker-skills` marketplace when missing
 4. Refreshes the marketplace when it already exists
 5. Installs `growth-hacker-skills@growth-hacker-skills`
+6. Preserves the configured scope
 
 The default scope is `user`.
 
-Set another scope when required:
+Use project scope:
 
 ```bash
 CLAUDE_PLUGIN_SCOPE=project bash scripts/install-claude-plugin.sh install
 ```
 
-Allowed scopes are `user`, `project`, and `local`.
+Use local scope:
+
+```bash
+CLAUDE_PLUGIN_SCOPE=local bash scripts/install-claude-plugin.sh install
+```
 
 ## Manual installation
 
@@ -56,21 +70,44 @@ Install the plugin:
 claude plugin install growth-hacker-skills@growth-hacker-skills --scope user
 ```
 
-In an active Claude Code session, load the installed components:
+In an active Claude Code session:
 
 ```text
 /reload-plugins
 ```
 
-## Update
+## Main router
 
-Use the repository script:
+The connected entry point is:
+
+```text
+/growth-hacker-skills:growth-hacker-skills
+```
+
+It reads the Neural Link graph and routes the request to the smallest useful chain of specialist skills.
+
+Direct specialist examples:
+
+```text
+/growth-hacker-skills:voice-builder
+/growth-hacker-skills:content-matrix
+/growth-hacker-skills:post-writer
+/growth-hacker-skills:editorial-visual-engine
+/growth-hacker-skills:graphic-designer
+/growth-hacker-skills:post-scorer
+```
+
+The skills remain model-invoked, so Claude can select them automatically from their descriptions when the user does not invoke a slash command.
+
+## Update
 
 ```bash
 bash scripts/install-claude-plugin.sh update
 ```
 
-Or update the marketplace manually, then install the current plugin version:
+The script refreshes the marketplace and applies the current plugin version.
+
+Manual equivalent:
 
 ```bash
 claude plugin marketplace update growth-hacker-skills
@@ -79,50 +116,66 @@ claude plugin install growth-hacker-skills@growth-hacker-skills --scope user
 
 Run `/reload-plugins` after updating an active session.
 
-## Validate
+The plugin uses explicit semantic versioning. Future releases must update the version in:
 
-Validate the marketplace and plugin package from the repository root:
+- `.claude-plugin/plugin.json`
+- `.claude-plugin/marketplace.json`
+- `skill-graph.json`
+- `CHANGELOG.md`
+
+Claude Code uses the resolved version for update detection.
+
+## Migrate from the previous plugin name
+
+The repository previously used the `social-media-skills` marketplace and plugin identity.
+
+The marketplace now includes a rename map, and the installer also provides an explicit migration action:
 
 ```bash
-claude plugin validate .
+bash scripts/install-claude-plugin.sh migrate
 ```
 
-The helper script runs the same local validation:
+Migration installs the new plugin first, then removes legacy user, project, or local entries only when they exist.
+
+The active namespace becomes:
+
+```text
+growth-hacker-skills
+```
+
+## Validate
+
+Run the complete validation set:
 
 ```bash
 bash scripts/install-claude-plugin.sh validate
 ```
 
-Run the repository checks as well:
+This executes:
 
 ```bash
+claude plugin validate .
 bash validate-skills.sh
 bash skills/editorial-visual-engine/scripts/validate-package.sh
+python3 scripts/validate-skill-graph.py
 bash scripts/validate-distribution.sh
 ```
 
 ## Local development
 
-Load the repository directly without installing it:
+Load the repository directly:
 
 ```bash
 claude --plugin-dir .
 ```
 
-After modifying a skill, use:
+After changing skills or manifests:
 
 ```text
 /reload-plugins
 ```
 
-Plugin skills are namespaced. Examples include:
-
-```text
-/growth-hacker-skills:voice-builder
-/growth-hacker-skills:post-writer
-/growth-hacker-skills:editorial-visual-engine
-/growth-hacker-skills:post-scorer
-```
+A local `--plugin-dir` copy takes precedence over an installed marketplace copy with the same plugin name for that session.
 
 ## Uninstall
 
@@ -130,29 +183,42 @@ Plugin skills are namespaced. Examples include:
 bash scripts/install-claude-plugin.sh uninstall
 ```
 
-Or:
+Manual equivalent:
 
 ```bash
 claude plugin uninstall growth-hacker-skills@growth-hacker-skills --scope user
 ```
 
-The installer leaves the marketplace configured. Remove it separately only when the catalog is no longer needed:
+The script leaves the marketplace configured for future installation.
+
+Remove the marketplace separately when it is no longer needed:
 
 ```bash
 claude plugin marketplace remove growth-hacker-skills --scope user
 ```
 
-## Package files
+Removing the last marketplace declaration may also remove plugins installed from it.
+
+## Package structure
 
 ```text
-.claude-plugin/plugin.json
-.claude-plugin/marketplace.json
-skills/*/SKILL.md
+.claude-plugin/
+  plugin.json
+  marketplace.json
+skills/
+  growth-hacker-skills/
+    SKILL.md
+  editorial-visual-engine/
+    SKILL.md
+  ...
+SKILL.md
+skill-graph.json
+templates/growth-context.md
 scripts/install-claude-plugin.sh
 ```
 
-The plugin and marketplace versions must match. `scripts/validate-distribution.sh` checks this contract.
+## Security
 
-## Security note
+Claude Code plugins are trusted components. Review the repository before installation, especially scripts, hooks, MCP configuration, executables, and external service requirements.
 
-Claude Code plugins are trusted components. Review the repository before installation, especially scripts, hooks, MCP configuration, executables, and external service requirements. This plugin currently distributes instruction skills and helper scripts. Some individual skills may call services configured by the user, such as Apify or Google AI.
+Growth Hacker Skills primarily distributes instruction skills, references, prompt templates, and validation scripts. Some specialist skills can use services configured by the user, including Apify or Google AI.
