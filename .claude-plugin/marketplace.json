@@ -1,34 +1,34 @@
 {
-  "name": "social-media-skills",
+  "name": "growth-hacker-skills",
   "owner": {
-    "name": "Charlie Hills",
-    "url": "https://charliehills.substack.com"
+    "name": "Mamdouh Aboammar",
+    "url": "https://github.com/imMamdouhaboammar"
   },
   "plugins": [
     {
-      "name": "social-media-skills",
+      "name": "growth-hacker-skills",
       "source": ".",
-      "description": "The complete set of Claude skills behind Charlie Hills' content system. 350k+ followers across LinkedIn, Instagram, Substack, X and YouTube. 100m+ views per year. 18 skills covering voice, LinkedIn, Instagram Reels, YouTube thumbnails, analytics, and community.",
-      "version": "1.0.0",
+      "description": "A connected growth marketing skill library for research, positioning, voice, LinkedIn writing, source-led editorial visuals, ChatGPT Images prompts, Google Flow motion, video, community, and performance review.",
+      "version": "2.0.0",
       "metadata": {
         "categories": [
-          "voice",
-          "linkedin",
-          "reels",
-          "youtube",
-          "analytics",
-          "community"
+          "marketing",
+          "growth",
+          "content",
+          "social-media",
+          "editorial-design"
         ],
         "tags": [
-          "content creation",
-          "linkedin growth",
-          "instagram reels",
-          "infographics",
-          "gemini",
-          "apify",
-          "elevenlabs",
-          "heygen",
-          "remotion"
+          "agent skills",
+          "growth marketing",
+          "linkedin content",
+          "content strategy",
+          "editorial visuals",
+          "chatgpt images",
+          "google flow",
+          "claude code",
+          "source analysis",
+          "marketing workflows"
         ]
       }
     }
