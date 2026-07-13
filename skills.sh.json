@@ -1,5 +1,5 @@
 {
-  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "$schema": "https://skills.sh/schema/skills.sh.json",
   "notGrouped": "bottom",
   "groupings": [
     {
