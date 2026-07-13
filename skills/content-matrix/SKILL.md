@@ -1,98 +1,83 @@
 ---
 name: content-matrix
 description: >
-  Generate 32+ LinkedIn post ideas in a single table by pairing the user's content pillars with 8 proven content formats. Based on the Justin Welsh content matrix. Use this skill whenever the user says "give me post ideas", "content matrix", "what should I post about", "generate post ideas", "content ideation", or "map out my content for the month". Pulls from about-me.md and voice.md if they exist, otherwise asks for pillars and context.
+  Generate 32 or more LinkedIn post ideas by pairing content pillars with eight proven formats. Use when the user asks for post ideas, a content matrix, monthly ideation, or topic mapping. A selected cell can be combined with a repository, article, tool, product, document, or release and handed to editorial-visual-engine for a source-backed visual, motion, and caption pack.
 ---
 
 # Content Matrix
 
 ## CRITICAL: Auto-start on load
 
-When this skill triggers, go straight to Step 1. Do not summarise. Start input gathering immediately.
+When this skill triggers, go straight to Step 1. Do not summarise.
 
 ## Step 1. Gather inputs
 
-Check the project for about-me.md. If it exists, read it and pre-fill the description of who the user is. Skip that question and tell the user what you pulled.
+Check for about-me.md. If it exists, read it and pre-fill the user context.
 
-If about-me.md is missing, ask:
+If it is missing, ask for two short paragraphs describing who the user is, what they do, and what they discuss.
 
-> Give me at least two paragraphs describing who you are, what you do, and what you like to discuss. The more specific you are, the more relevant the ideas.
+Then ask for content pillars in one batch:
 
-Wait for response.
+- I will type 3 to 5 pillars
+- Pull from voice.md
+- Suggest four pillars from about-me.md
 
-Then call AskUserQuestion:
-
-```json
-[
-  {
-    "question": "What are your content pillars?",
-    "header": "Pillars",
-    "multiSelect": false,
-    "options": [
-      {"label": "I will type them", "description": "I have 3 to 4 content pillars to use"},
-      {"label": "Pull from voice.md", "description": "Use the topics already defined in my voice files"},
-      {"label": "Suggest them for me", "description": "Based on my about-me.md, recommend 4 pillars"}
-    ]
-  }
-]
-```
-
-If the user types their own, accept 3 to 5 pillars. If fewer than 3, ask for more.
-
-If the user picks "Suggest them for me", read about-me.md, propose 4 pillars covering their positioning, and ask them to confirm or edit before continuing.
+Confirm suggested pillars before building the matrix.
 
 ## Step 2. Build the matrix
 
-Generate a markdown table with:
+Use these eight columns in order:
 
-- X axis (columns): 8 content formats, always in this order:
-  1. Actionable
-  2. Motivational
-  3. Analytical
-  4. Contrarian
-  5. Observation
-  6. X vs Y
-  7. Present vs Future
-  8. Listicle
-- Y axis (rows): the user's 3 to 5 pillars
+1. Actionable
+2. Motivational
+3. Analytical
+4. Contrarian
+5. Observation
+6. X vs Y
+7. Present vs Future
+8. Listicle
 
-Every cell contains one specific, concrete post idea tailored to the pillar and format. Not generic. Not reusable across pillars.
+Use the user's 3 to 5 pillars as rows.
 
-Format definitions to apply when filling each cell:
+Every cell contains one specific headline, not a broad theme. Each idea must fit both the pillar and the format.
 
-- **Actionable**: Ultra-specific how-to. Teaches the reader to do one thing.
-- **Motivational**: Inspirational story about someone who did something extraordinary in the niche.
-- **Analytical**: Breakdown of why something works the way it does.
-- **Contrarian**: Go against the common advice in the niche and back it up.
-- **Observation**: A hidden, silent, or underdiscussed trend the user has noticed.
-- **X vs Y**: Compare two entities (tools, styles, frameworks, companies).
-- **Present vs Future**: Current state vs a specific prediction, with the why.
-- **Listicle**: A list of resources, tips, mistakes, lessons, or steps.
+Definitions:
 
-Each cell's idea should be a specific headline, not a theme. Good: "The 3-line hook formula I stole from David Ogilvy". Bad: "Hooks".
+- Actionable: teaches one concrete action
+- Motivational: a relevant story with a lesson
+- Analytical: explains why something works
+- Contrarian: challenges common advice with a clear basis
+- Observation: surfaces an underdiscussed pattern
+- X vs Y: compares two specific options
+- Present vs Future: contrasts the current state with a reasoned prediction
+- Listicle: resources, mistakes, lessons, steps, or examples
 
-## Step 3. Output (surface-aware)
+## Step 3. Output by surface
 
-Pick the output mode based on the surface you are running on. Do not output the table in a fenced markdown code block — that renders as monospace plain text and makes a 5×8 grid hard to scan.
+- Chat surface with interactive table support: render an interactive matrix.
+- File-system surface: save `content-matrix-YYYY-MM-DD.md` and show a readable inline table.
+- Fallback: show a plain markdown table.
 
-- **Claude.ai or Claude Cowork (chat surfaces with interactive chart support):** render the matrix as an interactive chart / interactive table widget. Pillars as rows, formats as columns, each cell holding one specific headline. The user should be able to click a cell to see the full headline and any expansion notes. Do not also dump the table as markdown — the chart is the deliverable.
-- **Claude Code (file-system surface, has Write/Edit tools):** save the matrix to `content-matrix-YYYY-MM-DD.md` in the current working directory and print the same table inline in the response as a plain markdown table (no triple-backtick wrap). Confirm the file path so the user can open it.
-- **Fallback (no interactive chart, no file-system tools):** output a plain markdown table inline. Still no code-fence wrap.
+Name the strongest idea and explain why in one sentence.
 
-Below the table or chart, add one sentence naming the single strongest idea across the matrix and why.
+## Step 4. Route the selected idea
 
-## Step 4. Offer the next move
+Ask the user to select a cell by pillar and format.
 
-Ask:
+Then offer:
 
-> Any cell here you want me to write as a full post? Reference the cell by pillar + format (for example "Hooks × Contrarian") and I will hand it to the post-writer or post-formatter skill.
+- `post-writer` for a natural voice-led post
+- `post-formatter` for a named framework
+- `editorial-visual-engine` when the user has a supporting source link and wants source analysis, ChatGPT Images prompts, Google Flow motion, LinkedIn caption, or X output
 
-On Claude Code, also offer to append the drafted post into the same `content-matrix-YYYY-MM-DD.md` file under the cell reference.
+The source-backed route is:
+
+`selected matrix idea + source -> editorial-visual-engine`
 
 ## Rules
 
-- Minimum 3 pillars, maximum 5. More than 5 dilutes the matrix.
-- Every cell idea must be specific to that pillar AND that format. Do not reuse the same idea across pillars.
-- Tune the language to the user's voice if voice.md exists.
-- British English unless voice.md specifies American.
+- Minimum 3 pillars, maximum 5.
+- Do not reuse the same idea across pillars.
+- Tune language to voice.md when available.
+- Use British English unless voice.md specifies otherwise.
 - Never use em dashes.

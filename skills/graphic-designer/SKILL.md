@@ -1,7 +1,7 @@
 ---
 name: graphic-designer
 description: >
-  Create LinkedIn post graphics. Decides between an HTML/CSS structured graphic or an AI-generated infographic based on the post content. Use this skill whenever the user says "design a graphic", "create a visual", "make an image", "graphic for my post", "LinkedIn image", or wants any visual content to pair with a LinkedIn post. Also trigger when the user finishes writing a post and wants a matching graphic.
+  Create LinkedIn post graphics from an existing post. Use when the user says "design a graphic", "create a visual", "make an image", "graphic for my post", "LinkedIn image", or wants visual content to pair with a completed post. When the input is a repository, article, tool, product, release, document, screenshot, or source link and the user wants source analysis, ChatGPT Images prompts, motion, or captions, use editorial-visual-engine instead.
 ---
 
 # Graphic Designer
@@ -10,140 +10,133 @@ description: >
 
 When this skill triggers, go straight to Step 1. Do not summarise. Do not explain options. Start immediately.
 
-## Step 1. Read the post
+## Step 1. Route the input
 
-Check the project for the most recent post file. If found, read it. If not, say:
+If the input is a repository, article, AI skill, tool, product page, release note, document, screenshot set, or source link and the user wants any of these:
+
+- Source analysis
+- Creative angle options
+- Source Integrity Block
+- ChatGPT Images prompt
+- Google Flow motion prompt
+- LinkedIn and X captions in one workflow
+
+Use `editorial-visual-engine` instead and continue there. Do not duplicate its source-led workflow inside this skill.
+
+Otherwise, check the project for the most recent post file. If found, read it. If not, say:
 
 > Paste the post you want a graphic for.
 
-Wait for the post, then call AskUserQuestion:
+Wait for the post, then use a native structured question tool when available. Ask:
 
-```json
-[
-  {
-    "question": "What type of graphic fits this post best?",
-    "header": "Style",
-    "multiSelect": false,
-    "options": [
-      {"label": "HTML/CSS graphic", "description": "Clean structured layout. Framework, comparison, steps, data. Fully editable, screenshot to export."},
-      {"label": "Whiteboard infographic", "description": "Hand-drawn marker style on a whiteboard or notebook page. Recaps the post visually. Generated in Gemini."},
-      {"label": "Branded infographic", "description": "Professional infographic using your brand colours. Recaps the post visually. Generated in Gemini."},
-      {"label": "You decide", "description": "Analyse the post and pick the best format automatically"}
-    ]
-  }
-]
-```
+- HTML/CSS graphic
+- Whiteboard infographic
+- Branded infographic
+- You decide
+- Full source-led editorial pack, which routes to `editorial-visual-engine`
 
-If "You decide": analyse the post. If it contains numbered steps, frameworks, comparisons, or data tables, go Path A (HTML/CSS). If it recaps a workflow, shares tips, teaches a concept, or tells a story, go Path B (image prompt) and pick whichever style fits better.
+If "You decide": analyse the post. If it contains numbered steps, frameworks, comparisons, or data tables, go Path A. If it recaps a workflow, shares tips, teaches a concept, or tells a story, go Path B and pick whichever style fits better.
 
 ## Path A: HTML/CSS structured graphic
 
 Design constraints:
-- 1200 x 1400 pixels (LinkedIn optimal)
-- Dark background (#1a1a2e or user's brand colour) with high contrast text
-- Clean sans-serif font (Inter, system-ui)
+
+- 1200 x 1400 pixels
+- Dark background or the user's brand colour with high contrast text
+- Clean sans-serif font such as Inter or system-ui
 - White or light text on dark background
 - One accent colour for highlights and dividers
 - 40px minimum padding on all sides
 - No stock photo backgrounds
-- Let the post content dictate how many sections the graphic has. 3 steps = 3 blocks. 10 tips = 10 blocks. The constraint is legibility, not a fixed number. Every element must be large enough to read on a mobile screen.
+- Let the post content dictate the number of sections
+- Keep every element readable on a mobile screen
 
-Single self-contained HTML file with inline CSS. Include viewport meta tag.
+Create one self-contained HTML file with inline CSS and a viewport meta tag.
 
 Extract the core framework or steps from the post. Do not copy the full post. Distil into:
-- A short headline (5 to 8 words)
-- Key points as visual blocks (Unicode icons fine)
+
+- A short headline of 5 to 8 words
+- Key points as visual blocks
 - Footer with author name from about-me.md if available
 
-Save the HTML file. Tell the user:
+Save the HTML file and tell the user:
 
 > Open the HTML in your browser and screenshot it.
 
 ## Path B: Image generation prompt
 
-The graphic must recap the post content visually. It is not an abstract illustration or stock photo. It summarises the key information from the post in a visual format the reader can scan.
+The graphic must recap the post content visually. It is not an abstract illustration or stock photo.
 
-First, extract the content for the infographic from the post:
-- The main headline or hook (shortened to 5 to 10 words)
-- 3 to 6 key points, steps, or takeaways (one short line each)
-- Any numbers, stats, or data worth highlighting
-- A footer line (author name and CTA if appropriate)
+First extract:
 
-Then build the prompt based on the chosen style.
+- A headline of 5 to 10 words
+- 3 to 6 key points, steps, or takeaways
+- Numbers, stats, or data worth highlighting
+- A footer line when appropriate
 
 ### Style 1: Whiteboard infographic
 
-Use this prompt template. Fill in the content sections from the post.
+Use this prompt structure:
 
-```
-Generate a single image of a physical, hand-drawn infographic on a large whiteboard or notebook page.
+```text
+Generate one image of a physical, hand-drawn infographic on a large whiteboard or notebook page.
 
-Crucial Style Instructions (Read First):
-Medium: The image must look like a photograph of a real whiteboard or large paper notepad.
-Texture: All elements must look created by hand using colored marker pens (black, blue, red, green) and highlighters (yellow/orange). Lines should be slightly imperfect, wobbly, and have the texture of ink on a surface.
-No Digital Fonts: All text, headings, and bullet points must appear handwritten or hand-printed in marker pen.
+Medium: Make it look like a photograph of a real whiteboard or large paper notepad.
+Texture: All elements look created by hand using coloured marker pens and highlighters. Lines are slightly imperfect and have visible ink texture.
+No digital fonts: All text appears handwritten or hand-printed in marker pen.
+Canvas: 1080 x 1350 pixels.
 
-Layout: Structure the 1080x1350 image as follows:
+Title:
+[Exact headline]
 
-TITLE (large, bold marker, top of page):
-[Insert headline from the post]
+Content:
+[Exact 3 to 6 key points with drawn bullets, numbers, or small icons]
 
-CONTENT (hand-drawn sections with marker pen):
-[Insert 3 to 6 key points, each as a short hand-written line with a bullet, number, or small icon drawn next to it]
+[Display important numbers large with a circle or box]
 
-[If there are stats or numbers, draw them large with a circle or box around them]
-
-Use multi-colored markers for emphasis. Keep text large and legible. Make everything look hand-drawn with slight imperfections. Make it look like a photograph of an actual notebook page.
-
-Always include the handwritten text "[Author name from about-me.md] | Repost" at the bottom of the image, in the same hand-drawn marker style.
+Keep text large and legible. Include the exact footer approved by the user.
 ```
 
 ### Style 2: Branded infographic
 
-Ask the user for brand colours if not already known. If about-me.md exists, check there first.
+Ask for brand colours if they are not known. Check about-me.md or brand-kit.md first.
 
-```
-Generate a professional infographic image at 1080x1350 pixels.
+```text
+Generate a professional infographic at 1080 x 1350 pixels.
 
-Style: Clean, modern, editorial. Flat design with sharp edges and strong typography. No 3D effects, no gradients, no stock photos.
+Style: Clean, modern, editorial, flat, and highly readable. No generic 3D effects, stock photos, or visual clutter.
 
 Colour palette:
-- Background: [primary brand colour or dark neutral]
-- Text: [white or high-contrast colour]
-- Accent: [secondary brand colour]
+- Background: [colour]
+- Text: [high-contrast colour]
+- Accent: [colour]
 
-Layout:
-HEADLINE (top, large bold text):
-[Insert headline from the post]
+Headline:
+[Exact headline]
 
-BODY (structured sections, each with an icon or number):
-[Insert 3 to 6 key points as short lines, each with a visual marker: numbered circle, checkmark, or simple icon]
+Body:
+[Exact 3 to 6 points with numbered circles, checkmarks, or simple icons]
 
-[If there are stats, display them as large feature numbers with a label underneath]
+Footer:
+[Exact footer]
 
-FOOTER:
-[Author name from about-me.md] | [CTA or tagline if appropriate]
-
-Keep text large and scannable. Maximum 40 words on the entire image. No decorative borders. No watermarks. No logos unless the user provides one.
+Keep the copy scannable and do not add any text.
 ```
 
-Output the complete prompt in a code block. Tell the user:
-
-> Paste this into Gemini or your image generator. The prompt is ready to go.
+Output the complete prompt in a code block.
 
 ## After either path
 
 Say:
 
-> Graphic ready. Say "score my post" when you want feedback before publishing.
+> Graphic ready. Use editorial-visual-engine when you want to start from a link, add source integrity, create ChatGPT Images directions, or add Google Flow motion. Say "score my post" when you want caption feedback.
 
 ## Rules
 
-- Always read the post before designing. The graphic must recap the post content, not illustrate an abstract concept.
-- Structured graphics (Path A) must be a single HTML file with inline CSS.
-- Image prompts (Path B) must be fully self-contained. The user pastes it cold into Gemini and gets the graphic.
-- Extract and distil the post content into the graphic. No copying the full post text.
-- Whiteboard style: always hand-drawn marker look, imperfect lines, coloured pens, notebook/whiteboard texture.
-- Branded style: always clean, flat, modern, using the user's brand colours.
-- Never use em dashes in any output.
-- British English throughout.
+- Always read the post before designing.
+- Always route source-led Full Pack requests to `editorial-visual-engine`.
+- Structured graphics must be a single HTML file with inline CSS.
+- Image prompts must be self-contained.
+- Extract and distil the post content. Do not copy the full post.
+- Never use em dashes.
+- Use British English unless voice.md specifies otherwise.
