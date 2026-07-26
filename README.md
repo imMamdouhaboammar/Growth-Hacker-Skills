@@ -19,6 +19,35 @@ This repository is designed around one idea: a marketing workflow should not los
 
 Instead of isolated prompts, the repository uses a **Neural Link Protocol** that connects specialist skills through a main router, a machine-readable skill graph, a shared context bus, and explicit handoff contracts.
 
+
+<!-- project-story:start -->
+<details open>
+  <summary><strong>Why I built Growth Hacker Skills</strong></summary>
+  <br />
+  <table>
+    <tr>
+      <td width="118" align="center" valign="top">
+        <img src="./assets/readme/project-mark.svg" width="88" alt="Growth Hacker Skills repository mark" />
+      </td>
+      <td valign="top">
+        <p><strong>What is Growth Hacker Skills?</strong> A connected agent-skill network for research, positioning, content, creative production, and performance review.</p>
+        <p><strong>Built from a recurring problem:</strong> Marketing work loses context whenever it moves from research to strategy, copy, design, publishing, and analysis through isolated prompts.</p>
+        <p><strong>Practical goal:</strong> Carry approved evidence and decisions through specialist marketing skills with explicit routing and handoff contracts.</p>
+        <p><strong>Who it is for:</strong> Growth marketers, content teams, agencies, founders, and AI agents producing connected marketing work.</p>
+        <p><strong>Topics:</strong> AI marketing skills · growth marketing agent · marketing workflow automation · connected agent skills</p>
+      </td>
+    </tr>
+  </table>
+  <p><strong>Daily development summary</strong></p>
+  <ul>
+      <li>No public repository changes were recorded in the last 7 days.</li>
+      <li>The project purpose and documented usage remain unchanged.</li>
+      <li>The next update will appear automatically when public activity is detected.</li>
+  </ul>
+  <p><sub>Updated 2026-07-26T06:35:05.038Z · Deterministic public-activity summary</sub></p>
+</details>
+<!-- project-story:end -->
+
 ## Install
 
 ### SKILLS.sh
