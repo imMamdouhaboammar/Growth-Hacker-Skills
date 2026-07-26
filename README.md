@@ -22,29 +22,31 @@ Instead of isolated prompts, the repository uses a **Neural Link Protocol** that
 
 <!-- project-story:start -->
 <details open>
-  <summary><strong>Why I built Growth Hacker Skills</strong></summary>
+  <summary><strong>Problem to project: Why I built Growth Hacker Skills</strong></summary>
   <br />
+  <p align="center"><img src="https://raw.githubusercontent.com/imMamdouhaboammar/imMamdouhaboammar/main/assets/profile/project-badges.svg" width="488" alt="Real friction, building in public, daily pulse" /></p>
   <table>
     <tr>
-      <td width="118" align="center" valign="top">
-        <img src="./assets/readme/project-mark.svg" width="88" alt="Growth Hacker Skills repository mark" />
-      </td>
-      <td valign="top">
-        <p><strong>What is Growth Hacker Skills?</strong> A connected agent-skill network for research, positioning, content, creative production, and performance review.</p>
-        <p><strong>Built from a recurring problem:</strong> Marketing work loses context whenever it moves from research to strategy, copy, design, publishing, and analysis through isolated prompts.</p>
-        <p><strong>Practical goal:</strong> Carry approved evidence and decisions through specialist marketing skills with explicit routing and handoff contracts.</p>
-        <p><strong>Who it is for:</strong> Growth marketers, content teams, agencies, founders, and AI agents producing connected marketing work.</p>
-        <p><strong>Topics:</strong> AI marketing skills · growth marketing agent · marketing workflow automation · connected agent skills</p>
-      </td>
+      <td width="104" align="center" valign="middle"><img src="./assets/readme/project-mark.svg" width="76" alt="Growth Hacker Skills repository mark" /></td>
+      <td valign="middle"><strong>Growth Hacker Skills</strong><br />A connected agent-skill network for research, positioning, content, creative production, and performance review.</td>
     </tr>
   </table>
-  <p><strong>Daily development summary</strong></p>
+  <table>
+    <tr>
+      <td width="50%" valign="top"><strong>Recurring problem</strong><br />Marketing work loses context whenever it moves from research to strategy, copy, design, publishing, and analysis through isolated prompts.</td>
+      <td width="50%" valign="top"><strong>Practical goal</strong><br />Carry approved evidence and decisions through specialist marketing skills with explicit routing and handoff contracts.</td>
+    </tr>
+    <tr>
+      <td width="50%" valign="top"><strong>Built for</strong><br />Growth marketers, content teams, agencies, founders, and AI agents producing connected marketing work.</td>
+      <td width="50%" valign="top"><strong>Search terms</strong><br />AI marketing skills · growth marketing agent · marketing workflow automation · connected agent skills</td>
+    </tr>
+  </table>
+  <p><strong>Daily build pulse</strong></p>
   <ul>
-      <li>No public repository changes were recorded in the last 7 days.</li>
-      <li>The project purpose and documented usage remain unchanged.</li>
-      <li>The next update will appear automatically when public activity is detected.</li>
+      <li>1 commit landed: docs: add dynamic project story card.</li>
+      <li>2 pull requests updated, led by #1: docs: add dynamic project story card.</li>
+      <li>Daily summary covers 3 public activity items from the last 1 day.</li>
   </ul>
-  <p><sub>Updated 2026-07-26T06:35:05.038Z · Deterministic public-activity summary</sub></p>
 </details>
 <!-- project-story:end -->
 
