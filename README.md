@@ -45,7 +45,7 @@ Instead of isolated prompts, the repository uses a **Neural Link Protocol** that
   <ul>
       <li>1 commit landed: docs: add dynamic project story card.</li>
       <li>2 pull requests updated, led by #1: docs: add dynamic project story card.</li>
-      <li>Daily summary covers 3 public activity items from the last 1 day.</li>
+      <li>Daily summary covers 3 public activity items from the last 7 days.</li>
   </ul>
 </details>
 <!-- project-story:end -->
