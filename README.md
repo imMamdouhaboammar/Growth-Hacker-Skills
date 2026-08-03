@@ -43,9 +43,9 @@ Instead of isolated prompts, the repository uses a **Neural Link Protocol** that
   </table>
   <p><strong>Daily build pulse</strong></p>
   <ul>
-      <li>2 commits landed: Merge pull request #2 from imMamdouhaboammar/ecc-tools/Growth-Hacker-Skills-17850491769…; docs: add dynamic project story card.</li>
-      <li>2 pull requests updated, led by #2: feat: add Growth-Hacker-Skills ECC bundle.</li>
-      <li>Daily summary covers 4 public activity items from the last 7 days.</li>
+      <li>1 commit landed: Merge pull request #2 from imMamdouhaboammar/ecc-tools/Growth-Hacker-Skills-17850491769….</li>
+      <li>1 pull request updated, led by #2: feat: add Growth-Hacker-Skills ECC bundle.</li>
+      <li>Daily summary covers 2 public activity items from the last 7 days.</li>
   </ul>
 </details>
 <!-- project-story:end -->
